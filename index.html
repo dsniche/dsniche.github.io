@@ -1,0 +1,2678 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kana Keyboard</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100..900&display=swap");
+
+    body {
+      margin: 0;
+      max-width: 560px;
+      width: 100%;
+      height: 574px;
+      overflow: auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 2rem;
+      font-family: "Noto Sans JP", sans-serif;
+      background-color: #141414ee;
+      color: #f5f5f5;
+      padding: 0.5rem;
+      border-radius: 5px 5px 0 0;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    summary,
+    #bug_report summary {
+      background-color: #122863e5;
+      color: #ffffffd5;
+      padding: 0.5rem;
+      border-radius: 5px 5px 0 0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #bug_report summary {
+      background-color: #8a3100e5;
+    }
+
+    ul {
+      padding-left: 15px;
+      margin-bottom: 0;
+    }
+
+    #bug_notes_list {
+      padding-left: 22px;
+      margin-top: 0;
+    }
+
+    li {
+      line-height: 160%;
+      margin-bottom: 0.5rem;
+      list-style: none;
+    }
+
+    #bug_notes_list>li {
+      line-height: unset;
+      list-style: unset;
+    }
+
+    table {
+      border-collapse: collapse;
+      border: 2px solid #141414;
+      font-size: 10pt;
+      margin: 1.5rem auto 0.7rem auto;
+    }
+
+    th,
+    td {
+      border: 1px solid #777;
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #c1c6c9;
+    }
+
+    tbody>tr>th {
+      background-color: #12286340;
+    }
+
+    td {
+      font-family: "Noto Sans JP", sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    caption {
+      caption-side: bottom;
+      padding: 0.4rem;
+      font-weight: bold;
+    }
+
+    .information_container {
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+    }
+
+    .information,
+    #bug_report .information {
+      background-color: #12286320;
+      padding: 0.7rem;
+      border-radius: 0 0 5px 5px;
+      font-size: 12pt;
+    }
+
+    #bug_report .information {
+      background-color: #8a310020;
+    }
+
+    .information p {
+      margin: 0;
+    }
+
+    #app {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 0.8rem;
+      padding: 0.3125rem;
+    }
+
+    #help_information {
+      font-family: "Lato", sans-serif;
+      padding: 0.3125rem;
+      margin-bottom: 1rem;
+    }
+
+    #help_information p {
+      font-size: 12pt;
+    }
+
+    .example_key {
+      padding: 0.2rem 0.4rem;
+      background-color: #f0f0f0;
+      border: 1px solid #999;
+      border-radius: 4px;
+    }
+
+    #typing {
+      font-family: "Lato", sans-serif;
+      max-width: 536px;
+      width: 100%;
+      font-size: 14pt;
+      height: 21px;
+    }
+
+    #DISPLAY_AREA {
+      display: block;
+      font-family: "Noto Sans JP", sans-serif;
+      padding: 0 0.5rem;
+      border: 1px solid #12286390;
+      background-color: #12286335;
+      font-size: 16pt;
+      max-width: 526px;
+      width: 100%;
+      border-radius: 3px;
+      min-height: 35px;
+      font-weight: bold;
+    }
+
+    #keyboard {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 0.2rem;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    #set_11 {
+      padding-right: 0.8rem;
+    }
+
+    .key,
+    .empty,
+    .empty_n {
+      width: 38px;
+      height: 38px;
+      font-size: 13pt;
+    }
+
+    .key {
+      cursor: pointer;
+      font-family: "Noto Sans JP", sans-serif;
+    }
+
+    .empty {
+      background-color: #777777;
+      color: #fff;
+      border-radius: 0.3rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    #options {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    #ver {
+      font-weight: bold;
+      font-size: 9pt;
+      font-family: "Noto Sans JP", sans-serif;
+      text-align: right;
+      display: block;
+      border-style: solid;
+      border-width: 0 2px 2px 2px;
+      border-color: #141414ee;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0 0 5px 5px;
+    }
+
+    #kana,
+    #refresh,
+    #copy,
+    #delete,
+    #kana,
+    #backspace,
+    #help,
+    #return {
+      display: flex;
+      align-items: center;
+      padding: 0.2rem 0.4rem;
+      gap: 0.2rem;
+      font-family: "Noto Sans JP", sans-serif;
+    }
+
+    #copy img {
+      max-width: 15px;
+    }
+
+    #backspace img {
+      max-width: 22px;
+    }
+
+    #refresh img,
+    #delete img {
+      max-width: 18px;
+    }
+
+    #help img {
+      max-width: 15px;
+      filter: invert(90%);
+    }
+
+    #kana img {
+      max-width: 20px;
+      filter: invert(90%);
+    }
+
+    #return img {
+      max-width: 15px;
+      filter: invert(90%);
+    }
+
+    #kana,
+    #return {
+      background-color: #141414ee;
+      color: #ffffffd5;
+      border-radius: 4px;
+      border: none;
+      font-weight: bold;
+      font-family: "Noto Sans JP", sans-serif;
+    }
+
+    #kana:hover,
+    #return:hover {
+      background-color: #141414;
+    }
+
+    #help {
+      background-color: #122863e5;
+      color: #ffffffd5;
+      border-radius: 4px;
+      border: none;
+      font-weight: bold;
+    }
+
+    #help:hover {
+      background-color: #122863;
+    }
+
+    #copyright {
+      font-family: "Lato", sans-serif;
+      font-size: 9.1pt;
+      margin-top: 0.2rem;
+      margin-bottom: 0;
+      text-align: center;
+      opacity: 0.5;
+    }
+
+    #copyright img {
+      max-width: 8px;
+    }
+
+    @media screen and (max-width: 550px) {
+      #app {
+        padding: 0.3125rem 0.6rem;
+      }
+
+      #set_11 {
+        padding-right: 0;
+      }
+
+      #keyboard {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      #DISPLAY_AREA {
+        padding: 0 0.2rem;
+      }
+
+      #options {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div id="DISPLAY_AREA" readonly></div>
+    <textarea id="typing" placeholder="Type romaji here or use the keyboard below."></textarea>
+    <div id="keyboard">
+      <div id="set_1" class="column">
+      </div>
+      <div id="set_2" class="column">
+      </div>
+      <div id="set_3" class="column">
+      </div>
+      <div id="set_4" class="column">
+      </div>
+      <div id="set_5" class="column">
+      </div>
+      <div id="set_6" class="column">
+      </div>
+      <div id="set_7" class="column">
+      </div>
+      <div id="set_8" class="column">
+      </div>
+      <div id="set_9" class="column">
+      </div>
+      <div id="set_10" class="column">
+      </div>
+      <div id="set_11" class="column">
+      </div>
+      <div id="set_12" class="column">
+      </div>
+      <div id="filler" class="column">
+      </div>
+      <div id="set_13" class="column hidden">
+      </div>
+    </div>
+    <div id="options">
+      <button id="kana"><img src="https://www.svgrepo.com/show/489164/swap.svg" aria-hidden="true" /><span id="update">カタカナ</span></button>
+      <button id="refresh"><img src="https://www.svgrepo.com/show/392649/arrow-refresh-direction-navigation.svg" aria-hidden="true" /><span>Reset</span></button>
+      <button id="copy"><img src="https://www.svgrepo.com/show/488885/copy-1.svg" aria-hidden="true" /><span>Copy</span></button>
+      <button id="backspace"><img src="https://www.svgrepo.com/show/342967/backspace.svg" aria-hidden="true" /><span>Backspace</span></button>
+      <button id="delete"><img src="https://www.svgrepo.com/show/368049/delete.svg" aria-hidden="true" /><span>Delete</span></button>
+      <button id="help"><img src="https://www.svgrepo.com/show/438616/help-round.svg" aria-hidden="true" /><span>Help</span></button>
+    </div>
+  </div>
+  <div id="help_information" class="hidden">
+    <h1>Kana Keyboard Help Page</h1>
+    <span id="ver">Kana Keyboard Ver. 3.5 | Mode: <em>Randomized</em></span>
+    <p style="margin-top: 1.5rem;">Thank you for using the Kana Keyboard. This page contains information pertaining to available features and updates for the keyboard. For additional assistance please contact your instructor.</p>
+    <div class="information_container">
+      <details>
+        <summary>Keyboard Shortcuts (Windows/Android)</summary>
+        <div class="information">
+          <p>The following shortcuts can be used to enhance/expediate your experience using the Kana Keyboard when typing.</p>
+          <ul>
+            <li><span class="example_key">Spacebar</span> - Changes the current kana setting (Hiragana or Katakana) of the keyboard.</li>
+            <li><span class="example_key">CTRL</span> + <span class="example_key">Backspace</span> - Deletes the last character that was entered in the container. Hold down the buttons to rapidly delete characters.</li>
+            <li><span class="example_key">CTRL</span> + <span class="example_key">Delete</span> - Deletes your entire word/sentence.</li>
+            <li><span class="example_key">CTRL</span> + <span class="example_key">A</span> - Automatically highlights/selects your word/sentence. Use this in conjunction with <span class="example_key">CTRL</span> + <span class="example_key">C</span> to quickly highlight and copy your word. <strong><em>**RECOMMENDED</em></strong></li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>Keyboard Shortcuts (macOS/iOS)</summary>
+        <div class="information">
+          <p>The following shortcuts can be used to enhance/expediate your experience using the Kana Keyboard when typing.</p>
+          <ul>
+            <li><span class="example_key">Spacebar</span> - Changes the current kana setting (Hiragana or Katakana) of the keyboard.</li>
+            <li><span class="example_key">⌘</span> + <span class="example_key">Backspace</span> - Deletes the last character that was entered in the container. Hold down the buttons to rapidly delete characters.</li>
+            <li><span class="example_key">⌘</span> + <span class="example_key">Delete</span> - Deletes your entire word/sentence.</li>
+            <li><span class="example_key">⌘</span> + <span class="example_key">A</span> - Automatically highlights/selects your word/sentence. Use this in conjunction with <span class="example_key">⌘</span> + <span class="example_key">C</span> to quickly highlight and copy your word. <strong><em>**RECOMMENDED</em></strong></li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>Key Combinations</summary>
+        <div class="information">
+          <p>The Kana Keyboard utilizes Romaji in order to generate the appropriate character either in Hiragana or Katakana. However, due to the nature of certain characters, special keyboard combinations need to be used in order to generate the appropriate character. Below is a list of notable combinations.</p>
+          <table>
+            <caption>
+              Key Combinations Table
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Key Combo</th>
+                <th scope="col">Hiragana</th>
+                <th scope="col">Katakana</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">nn</th>
+                <td>ん</td>
+                <td>ン</td>
+              </tr>
+              <tr>
+                <th scope="row">xtsu</th>
+                <td>っ</td>
+                <td>ッ</td>
+              </tr>
+              <tr>
+                <th scope="row">xya</th>
+                <td>ゃ</td>
+                <td>ャ</td>
+              </tr>
+              <tr>
+                <th scope="row">xyu</th>
+                <td>ゅ</td>
+                <td>ュ</td>
+              </tr>
+              <tr>
+                <th scope="row">xyo</th>
+                <td>ょ</td>
+                <td>ョ</td>
+              </tr>
+            </tbody>
+            </tfoot>
+          </table>
+          <p><em>**Additional exclusive katakana characters can be accessed by typing x then the associated romaji.</em></p>
+        </div>
+      </details>
+      <details id="bug_report">
+        <summary>Bug Notes</summary>
+        <div class="information">
+          <ul id="bug_notes_list">
+            <li>The Copy Button does not work with New Quizzes in Canvas. <em>(8/31/24)</em></li>
+            <li>Kana Keyboard blocked in Canvas via FireFox with New Quizzes. Error reports due to CAS. <em>(8/31/24)</em></li>
+            <li>Mobile Device users reportedly get native permissions inaccessible error for Kana Keyboard. Commonly associated with users in Canvas Student app and Safari browser. <em>(8/31/24)</em></li>
+          </ul>
+        </div>
+      </details>
+    </div>
+    <br />
+    <button id="return"><img src="https://www.svgrepo.com/show/101168/go-back-arrow.svg" aria-hidden="true" /><span id="update">Return</span></button>
+  </div>
+  <p id="copyright">Kana Keyboard. <img src="https://www.svgrepo.com/show/102010/copyright-symbol.svg" aria-hidden="true" /> Copyright 2025 Darian Saffold. All rights reserved.</p>
+  <script>
+    let kana_toggle = "hiragana";
+    const kana = document.querySelector("#kana");
+    const reset_button = document.querySelector("#refresh");
+    const copy = document.querySelector("#copy");
+    const backspace = document.querySelector("#backspace");
+    const remove = document.querySelector("#delete");
+    const help = document.querySelector("#help");
+    const goback = document.querySelector("#return");
+    let keys = document.querySelectorAll(".key");
+    const key_container = document.querySelectorAll(".column");
+    let selectedKey;
+    const random_keys = {
+      1: {
+        id: "a",
+        hira: "あ",
+        kata: "ア"
+      },
+      2: {
+        id: "i",
+        hira: "い",
+        kata: "イ"
+      },
+      3: {
+        id: "u",
+        hira: "う",
+        kata: "ウ"
+      },
+      4: {
+        id: "e",
+        hira: "え",
+        kata: "エ"
+      },
+      5: {
+        id: "o",
+        hira: "お",
+        kata: "オ"
+      },
+      6: {
+        id: "ka",
+        hira: "か",
+        kata: "カ"
+      },
+      7: {
+        id: "ki",
+        hira: "き",
+        kata: "キ"
+      },
+      8: {
+        id: "ku",
+        hira: "く",
+        kata: "ク"
+      },
+      9: {
+        id: "ke",
+        hira: "け",
+        kata: "ケ"
+      },
+      10: {
+        id: "ko",
+        hira: "こ",
+        kata: "コ"
+      },
+      11: {
+        id: "sa",
+        hira: "さ",
+        kata: "サ"
+      },
+      12: {
+        id: "shi",
+        hira: "し",
+        kata: "シ"
+      },
+      13: {
+        id: "su",
+        hira: "す",
+        kata: "ス"
+      },
+      14: {
+        id: "se",
+        hira: "せ",
+        kata: "セ"
+      },
+      15: {
+        id: "so",
+        hira: "そ",
+        kata: "ソ"
+      },
+      16: {
+        id: "ta",
+        hira: "た",
+        kata: "タ"
+      },
+      17: {
+        id: "chi",
+        hira: "ち",
+        kata: "チ"
+      },
+      18: {
+        id: "tsu",
+        hira: "つ",
+        kata: "ツ"
+      },
+      19: {
+        id: "te",
+        hira: "て",
+        kata: "テ"
+      },
+      20: {
+        id: "to",
+        hira: "と",
+        kata: "ト"
+      },
+      21: {
+        id: "na",
+        hira: "な",
+        kata: "ナ"
+      },
+      22: {
+        id: "ni",
+        hira: "に",
+        kata: "ニ"
+      },
+      23: {
+        id: "nu",
+        hira: "ぬ",
+        kata: "ヌ"
+      },
+      24: {
+        id: "ne",
+        hira: "ね",
+        kata: "ネ"
+      },
+      25: {
+        id: "no",
+        hira: "の",
+        kata: "ノ"
+      },
+      26: {
+        id: "ha",
+        hira: "は",
+        kata: "ハ"
+      },
+      27: {
+        id: "hi",
+        hira: "ひ",
+        kata: "ヒ"
+      },
+      28: {
+        id: "fu",
+        hira: "ふ",
+        kata: "フ"
+      },
+      29: {
+        id: "he",
+        hira: "へ",
+        kata: "ヘ"
+      },
+      30: {
+        id: "ho",
+        hira: "ほ",
+        kata: "ホ"
+      },
+      31: {
+        id: "ma",
+        hira: "ま",
+        kata: "マ"
+      },
+      32: {
+        id: "mi",
+        hira: "み",
+        kata: "ミ"
+      },
+      33: {
+        id: "mu",
+        hira: "む",
+        kata: "ム"
+      },
+      34: {
+        id: "me",
+        hira: "め",
+        kata: "メ"
+      },
+      35: {
+        id: "mo",
+        hira: "も",
+        kata: "モ"
+      },
+      36: {
+        id: "ya",
+        hira: "や",
+        kata: "ヤ"
+      },
+      37: {
+        id: "yu",
+        hira: "ゆ",
+        kata: "ユ"
+      },
+      38: {
+        id: "yo",
+        hira: "よ",
+        kata: "ヨ"
+      },
+      39: {
+        id: "ra",
+        hira: "ら",
+        kata: "ラ"
+      },
+      40: {
+        id: "ri",
+        hira: "り",
+        kata: "リ"
+      },
+      41: {
+        id: "ru",
+        hira: "る",
+        kata: "ル"
+      },
+      42: {
+        id: "re",
+        hira: "れ",
+        kata: "レ"
+      },
+      43: {
+        id: "ro",
+        hira: "ろ",
+        kata: "ロ"
+      },
+      44: {
+        id: "wa",
+        hira: "わ",
+        kata: "ワ"
+      },
+      45: {
+        id: "wo",
+        hira: "を",
+        kata: "ヲ"
+      },
+      46: {
+        id: "n",
+        hira: "ん",
+        kata: "ン"
+      }
+    };
+    let x;
+    let id_container = [];
+    let id = [];
+    let kana_container = [];
+    let loop_counter = 0;
+    for (let i = 0; i < keys.length; i++) {
+      keys[i].addEventListener("click", (e) => {
+        if (keys[i].textContent === "゛") {
+          dakuten();
+        } else if (keys[i].textContent === "゜") {
+          handakuten();
+        } else {
+          selectedKey = keys[i].textContent;
+          addText(selectedKey);
+        }
+      });
+    }
+    kana.addEventListener("click", change_kana);
+    backspace.addEventListener("click", (e) => {
+      if (document.getElementById("DISPLAY_AREA").textContent != "") {
+        document.getElementById(
+            "DISPLAY_AREA"
+          ).textContent = document
+          .getElementById("DISPLAY_AREA")
+          .textContent.slice(0, -1);
+      } else {
+        alert("Error: No more characters to delete.");
+      }
+    });
+    remove.addEventListener("click", (e) => {
+      document.getElementById("DISPLAY_AREA").textContent = "";
+    });
+    copy.addEventListener("click", (e) => {
+      navigator.clipboard.writeText(
+        document.getElementById("DISPLAY_AREA").textContent
+      );
+    });
+    help.addEventListener("click", (e) => {
+      document.querySelector("#app").classList.add("hidden");
+      document.querySelector("#help_information").classList.remove("hidden");
+    });
+    goback.addEventListener("click", (e) => {
+      document.querySelector("#app").classList.remove("hidden");
+      document.querySelector("#help_information").classList.add("hidden");
+    });
+    reset_button.addEventListener("click", reset);
+
+    function change_kana() {
+      if (kana_toggle === "hiragana") {
+        kana_toggle = "katakana";
+        document.querySelector("#update").textContent = "ひらがな";
+        document.querySelector("#a").textContent = "ア";
+        document.querySelector("#i").textContent = "イ";
+        document.querySelector("#u").textContent = "ウ";
+        document.querySelector("#e").textContent = "エ";
+        document.querySelector("#o").textContent = "オ";
+        document.querySelector("#ka").textContent = "カ";
+        document.querySelector("#ki").textContent = "キ";
+        document.querySelector("#ku").textContent = "ク";
+        document.querySelector("#ke").textContent = "ケ";
+        document.querySelector("#ko").textContent = "コ";
+        document.querySelector("#sa").textContent = "サ";
+        document.querySelector("#shi").textContent = "シ";
+        document.querySelector("#su").textContent = "ス";
+        document.querySelector("#se").textContent = "セ";
+        document.querySelector("#so").textContent = "ソ";
+        document.querySelector("#ta").textContent = "タ";
+        document.querySelector("#chi").textContent = "チ";
+        document.querySelector("#tsu").textContent = "ツ";
+        document.querySelector("#te").textContent = "テ";
+        document.querySelector("#to").textContent = "ト";
+        document.querySelector("#na").textContent = "ナ";
+        document.querySelector("#ni").textContent = "ニ";
+        document.querySelector("#nu").textContent = "ヌ";
+        document.querySelector("#ne").textContent = "ネ";
+        document.querySelector("#no").textContent = "ノ";
+        document.querySelector("#ha").textContent = "ハ";
+        document.querySelector("#hi").textContent = "ヒ";
+        document.querySelector("#fu").textContent = "フ";
+        document.querySelector("#he").textContent = "ヘ";
+        document.querySelector("#ho").textContent = "ホ";
+        document.querySelector("#ma").textContent = "マ";
+        document.querySelector("#mi").textContent = "ミ";
+        document.querySelector("#mu").textContent = "ム";
+        document.querySelector("#me").textContent = "メ";
+        document.querySelector("#mo").textContent = "モ";
+        document.querySelector("#ya").textContent = "ヤ";
+        document.querySelector("#yu").textContent = "ユ";
+        document.querySelector("#yo").textContent = "ヨ";
+        document.querySelector("#ra").textContent = "ラ";
+        document.querySelector("#ri").textContent = "リ";
+        document.querySelector("#ru").textContent = "ル";
+        document.querySelector("#re").textContent = "レ";
+        document.querySelector("#ro").textContent = "ロ";
+        document.querySelector("#wa").textContent = "ワ";
+        document.querySelector("#wo").textContent = "ヲ";
+        document.querySelector("#n").textContent = "ン";
+        document.querySelector("#sokuon").textContent = "ッ";
+        document.querySelector("#xya").textContent = "ャ";
+        document.querySelector("#xyu").textContent = "ュ";
+        document.querySelector("#xyo").textContent = "ョ";
+        document.querySelector("#filler").classList.add("hidden");
+        document.querySelector("#long_vowel_filler").classList.add("hidden");
+        document.querySelector("#set_13").classList.remove("hidden");
+        document.querySelector("#long_vowel").classList.remove("hidden");
+      } else {
+        kana_toggle = "hiragana";
+        document.querySelector("#update").textContent = "カタカナ";
+        document.querySelector("#a").textContent = "あ";
+        document.querySelector("#i").textContent = "い";
+        document.querySelector("#u").textContent = "う";
+        document.querySelector("#e").textContent = "え";
+        document.querySelector("#o").textContent = "お";
+        document.querySelector("#ka").textContent = "か";
+        document.querySelector("#ki").textContent = "き";
+        document.querySelector("#ku").textContent = "く";
+        document.querySelector("#ke").textContent = "け";
+        document.querySelector("#ko").textContent = "こ";
+        document.querySelector("#sa").textContent = "さ";
+        document.querySelector("#shi").textContent = "し";
+        document.querySelector("#su").textContent = "す";
+        document.querySelector("#se").textContent = "せ";
+        document.querySelector("#so").textContent = "そ";
+        document.querySelector("#ta").textContent = "た";
+        document.querySelector("#chi").textContent = "ち";
+        document.querySelector("#tsu").textContent = "つ";
+        document.querySelector("#te").textContent = "て";
+        document.querySelector("#to").textContent = "と";
+        document.querySelector("#na").textContent = "な";
+        document.querySelector("#ni").textContent = "に";
+        document.querySelector("#nu").textContent = "ぬ";
+        document.querySelector("#ne").textContent = "ね";
+        document.querySelector("#no").textContent = "の";
+        document.querySelector("#ha").textContent = "は";
+        document.querySelector("#hi").textContent = "ひ";
+        document.querySelector("#fu").textContent = "ふ";
+        document.querySelector("#he").textContent = "へ";
+        document.querySelector("#ho").textContent = "ほ";
+        document.querySelector("#ma").textContent = "ま";
+        document.querySelector("#mi").textContent = "み";
+        document.querySelector("#mu").textContent = "む";
+        document.querySelector("#me").textContent = "め";
+        document.querySelector("#mo").textContent = "も";
+        document.querySelector("#ya").textContent = "や";
+        document.querySelector("#yu").textContent = "ゆ";
+        document.querySelector("#yo").textContent = "よ";
+        document.querySelector("#ra").textContent = "ら";
+        document.querySelector("#ri").textContent = "り";
+        document.querySelector("#ru").textContent = "る";
+        document.querySelector("#re").textContent = "れ";
+        document.querySelector("#ro").textContent = "ろ";
+        document.querySelector("#wa").textContent = "わ";
+        document.querySelector("#wo").textContent = "を";
+        document.querySelector("#n").textContent = "ん";
+        document.querySelector("#sokuon").textContent = "っ";
+        document.querySelector("#xya").textContent = "ゃ";
+        document.querySelector("#xyu").textContent = "ゅ";
+        document.querySelector("#xyo").textContent = "ょ";
+        document.querySelector("#filler").classList.remove("hidden");
+        document.querySelector("#long_vowel_filler").classList.remove("hidden");
+        document.querySelector("#set_13").classList.add("hidden");
+        document.querySelector("#long_vowel").classList.add("hidden");
+      }
+    }
+
+    function addText(key) {
+      document.getElementById("DISPLAY_AREA").textContent += key;
+    }
+
+    function dakuten() {
+      const lastLetter = document
+        .getElementById("DISPLAY_AREA")
+        .textContent.slice(-1);
+      document.getElementById("DISPLAY_AREA").textContent = document
+        .getElementById("DISPLAY_AREA")
+        .textContent.slice(0, -1);
+      if (lastLetter === "か") {
+        document.getElementById("DISPLAY_AREA").textContent += "が";
+      } else if (lastLetter === "き") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぎ";
+      } else if (lastLetter === "く") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぐ";
+      } else if (lastLetter === "け") {
+        document.getElementById("DISPLAY_AREA").textContent += "げ";
+      } else if (lastLetter === "こ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ご";
+      } else if (lastLetter === "さ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ざ";
+      } else if (lastLetter === "し") {
+        document.getElementById("DISPLAY_AREA").textContent += "じ";
+      } else if (lastLetter === "す") {
+        document.getElementById("DISPLAY_AREA").textContent += "ず";
+      } else if (lastLetter === "せ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぜ";
+      } else if (lastLetter === "そ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぞ";
+      } else if (lastLetter === "た") {
+        document.getElementById("DISPLAY_AREA").textContent += "だ";
+      } else if (lastLetter === "ち") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぢ";
+      } else if (lastLetter === "つ") {
+        document.getElementById("DISPLAY_AREA").textContent += "づ";
+      } else if (lastLetter === "て") {
+        document.getElementById("DISPLAY_AREA").textContent += "で";
+      } else if (lastLetter === "と") {
+        document.getElementById("DISPLAY_AREA").textContent += "ど";
+      } else if (lastLetter === "は") {
+        document.getElementById("DISPLAY_AREA").textContent += "ば";
+      } else if (lastLetter === "ひ") {
+        document.getElementById("DISPLAY_AREA").textContent += "び";
+      } else if (lastLetter === "ふ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぶ";
+      } else if (lastLetter === "へ") {
+        document.getElementById("DISPLAY_AREA").textContent += "べ";
+      } else if (lastLetter === "ほ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぼ";
+      } else if (lastLetter === "カ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ガ";
+      } else if (lastLetter === "キ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ギ";
+      } else if (lastLetter === "ク") {
+        document.getElementById("DISPLAY_AREA").textContent += "グ";
+      } else if (lastLetter === "ケ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ゲ";
+      } else if (lastLetter === "コ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ゴ";
+      } else if (lastLetter === "サ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ザ";
+      } else if (lastLetter === "シ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ジ";
+      } else if (lastLetter === "ス") {
+        document.getElementById("DISPLAY_AREA").textContent += "ズ";
+      } else if (lastLetter === "セ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ゼ";
+      } else if (lastLetter === "ソ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ゾ";
+      } else if (lastLetter === "タ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ダ";
+      } else if (lastLetter === "チ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ヂ";
+      } else if (lastLetter === "ツ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ヅ";
+      } else if (lastLetter === "テ") {
+        document.getElementById("DISPLAY_AREA").textContent += "デ";
+      } else if (lastLetter === "ト") {
+        document.getElementById("DISPLAY_AREA").textContent += "ド";
+      } else if (lastLetter === "ハ") {
+        document.getElementById("DISPLAY_AREA").textContent += "バ";
+      } else if (lastLetter === "ヒ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ビ";
+      } else if (lastLetter === "フ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ブ";
+      } else if (lastLetter === "ヘ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ベ";
+      } else if (lastLetter === "ホ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ボ";
+      } else if (lastLetter === "ウ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ヴ";
+      } else {
+        document.getElementById("DISPLAY_AREA").textContent += lastLetter;
+        alert("Error: That character is incompatible with ゛");
+      }
+    }
+
+    function handakuten() {
+      const lastLetter = document
+        .getElementById("DISPLAY_AREA")
+        .textContent.slice(-1);
+      document.getElementById("DISPLAY_AREA").textContent = document
+        .getElementById("DISPLAY_AREA")
+        .textContent.slice(0, -1);
+      if (lastLetter === "は") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぱ";
+      } else if (lastLetter === "ひ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぴ";
+      } else if (lastLetter === "ふ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぷ";
+      } else if (lastLetter === "へ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぺ";
+      } else if (lastLetter === "ほ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ぽ";
+      } else if (lastLetter === "ハ") {
+        document.getElementById("DISPLAY_AREA").textContent += "パ";
+      } else if (lastLetter === "ヒ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ピ";
+      } else if (lastLetter === "フ") {
+        document.getElementById("DISPLAY_AREA").textContent += "プ";
+      } else if (lastLetter === "ヘ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ペ";
+      } else if (lastLetter === "ホ") {
+        document.getElementById("DISPLAY_AREA").textContent += "ポ";
+      } else {
+        document.getElementById("DISPLAY_AREA").textContent += lastLetter;
+        alert("Error: That character is incompatible with ゜");
+      }
+    }
+
+    function reset() {
+      x = "";
+      id = [];
+      kanaContainer = [];
+      id_container = [];
+      loop_counter = 0;
+      for (let i = 0; i < key_container.length; i++) {
+        key_container[i].innerHTML = "";
+      }
+      order();
+    }
+
+    function order() {
+      for (let i = 1; i <= 46; i++) {
+        x = Math.floor(Math.random() * (46 - 1 + 1)) + 1;
+        let repeated = id_container.indexOf(x);
+        if (repeated == -1) {
+          id_container.push(x);
+        } else {
+          i--;
+        }
+      }
+      randomize();
+    }
+
+    function randomize() {
+      if (loop_counter == 9) {
+        if (kana_toggle === "hiragana") {
+          id.push(random_keys[id_container[0]]["id"]);
+          kana_container.push(random_keys[id_container[0]]["hira"]);
+        } else {
+          id.push(random_keys[id_container[0]]["id"]);
+          kana_container.push(random_keys[id_container[0]]["kata"]);
+        }
+        generate_keys();
+      } else {
+        if (kana_toggle === "hiragana") {
+          for (let i = 0; i < 5; i++) {
+            id.push(random_keys[id_container[0]]["id"]);
+            kana_container.push(random_keys[id_container[0]]["hira"]);
+            id_container.shift();
+          }
+        } else {
+          for (let i = 0; i < 5; i++) {
+            id.push(random_keys[id_container[0]]["id"]);
+            kana_container.push(random_keys[id_container[0]]["kata"]);
+            id_container.shift();
+          }
+        }
+        generate_keys();
+      }
+    }
+
+    function generate_keys() {
+      if (loop_counter == 9) {
+        key_container[loop_counter].insertAdjacentHTML(
+          "afterbegin",
+          `
+        <button class="key" id="${id[0]}">${kana_container[0]}</button>
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        `
+        );
+        if (kana_toggle === "hiragana") {
+          key_container[loop_counter + 1].insertAdjacentHTML(
+            "afterbegin",
+            `
+        <button class="key" id="sokuon">っ</button>
+        <button class="key" id="dakuten">゛</button>
+        <button class="key" id="handakuten">゜</button>
+        <div id="long_vowel_filler" class="empty">&nbsp;</div>
+        <button class="key hidden" id="long_vowel">ー</button>
+        <div id="long_vowel_filler" class="empty">&nbsp;</div>
+        `
+          );
+          key_container[loop_counter + 2].insertAdjacentHTML(
+            "afterbegin",
+            `
+        <button class="key" id="xya">ゃ</button>
+        <div class="empty">&nbsp;</div>
+        <button class="key" id="xyu">ゅ</button>
+        <div class="empty">&nbsp;</div>
+        <button class="key" id="xyo">ょ</button>
+        `
+          );
+          key_container[loop_counter + 3].insertAdjacentHTML(
+            "afterbegin",
+            `
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        `
+          );
+          key_container[loop_counter + 4].insertAdjacentHTML(
+            "afterbegin",
+            `
+        <button class="key">ァ</button>
+        <button class="key">ィ</button>
+        <button class="key">ュ</button>
+        <button class="key">ェ</button>
+        <button class="key">ォ</button>
+        `
+          );
+        } else {
+          key_container[loop_counter + 1].insertAdjacentHTML(
+            "afterbegin",
+            `
+        <button class="key" id="sokuon">ッ</button>
+        <button class="key" id="dakuten">゛</button>
+        <button class="key" id="handakuten">゜</button>
+        <div id="long_vowel_filler" class="empty hidden">&nbsp;</div>
+        <button class="key" id="long_vowel">ー</button>
+        <div id="long_vowel_filler" class="empty">&nbsp;</div>
+        `
+          );
+          key_container[loop_counter + 2].insertAdjacentHTML(
+            "afterbegin",
+            `
+        <button class="key" id="xya">ャ</button>
+        <div class="empty">&nbsp;</div>
+        <button class="key" id="xyu">ュ</button>
+        <div class="empty">&nbsp;</div>
+        <button class="key" id="xyo">ョ</button>
+        `
+          );
+          key_container[loop_counter + 3].insertAdjacentHTML(
+            "afterbegin",
+            `
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        <div class="empty">&nbsp;</div>
+        `
+          );
+          key_container[loop_counter + 4].insertAdjacentHTML(
+            "afterbegin",
+            `
+        <button class="key">ァ</button>
+        <button class="key">ィ</button>
+        <button class="key">ュ</button>
+        <button class="key">ェ</button>
+        <button class="key">ォ</button>
+        `
+          );
+        }
+        initialize();
+        return;
+      }
+      key_container[loop_counter].insertAdjacentHTML(
+        "afterbegin",
+        `
+        <button class="key" id="${id[0]}">${kana_container[0]}</button>
+        <button class="key" id="${id[1]}">${kana_container[1]}</button>
+        <button class="key" id="${id[2]}">${kana_container[2]}</button>
+        <button class="key" id="${id[3]}">${kana_container[3]}</button>
+        <button class="key" id="${id[4]}">${kana_container[4]}</button>
+        `
+      );
+      id = [];
+      kana_container = [];
+      loop_counter += 1;
+      randomize();
+    }
+
+    function initialize() {
+      keys = document.querySelectorAll(".key");
+      for (let i = 0; i < keys.length; i++) {
+        keys[i].addEventListener("click", (e) => {
+          if (keys[i].textContent === "゛") {
+            dakuten();
+          } else if (keys[i].textContent === "゜") {
+            handakuten();
+          } else {
+            selectedKey = keys[i].textContent;
+            addText(selectedKey);
+          }
+        });
+      }
+    }
+    document.querySelector("#typing").addEventListener("input", (e) => {
+      let text = document.getElementById("typing").value.toLowerCase();
+      if (text == "a") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "あ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ア";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "i") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "い";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "イ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "u") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "う";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ウ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "e") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "え";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "エ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "o") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "お";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "オ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ka") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "か";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "カ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ki") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "き";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "キ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ku") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "く";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ク";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ke") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "け";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ケ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ko") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "こ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "コ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "sa") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "さ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "サ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "shi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "し";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "シ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "su") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "す";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ス";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "se") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "せ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "セ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "so") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "そ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ソ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ta") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "た";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "タ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "chi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ち";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "チ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "tsu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "つ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ツ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "te") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "て";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "テ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "to") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "と";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ト";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "na") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "な";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ナ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ni") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "に";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ニ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "nu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぬ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヌ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ne") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ね";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ネ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "no") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "の";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ノ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ha") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "は";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ハ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ひ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヒ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "fu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ふ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "フ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "he") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "へ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヘ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ho") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ほ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ホ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ma") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ま";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "マ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "み";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ミ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "む";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ム";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "me") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "め";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "メ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "も";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "モ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "や";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヤ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "yu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ゆ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ユ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "yo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "よ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヨ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ra") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ら";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ラ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ri") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "り";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "リ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ru") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "る";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ル";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "re") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "れ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "レ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ro") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ろ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ロ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "wa") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "わ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ワ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "wo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "を";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヲ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ga") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "が";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ガ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "gi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぎ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ギ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "gu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぐ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "グ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ge") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "げ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ゲ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "go") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ご";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ゴ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "za") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ざ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ギ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ji") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "じ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ジ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "zu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ず";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ズ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ze") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぜ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ゼ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "zo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぞ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ゾ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "da") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "だ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ダ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "di") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぢ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヂ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "du") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "づ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヅ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "de") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "で";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "デ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "do") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ど";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ド";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ba") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ば";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "バ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "び";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ビ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぶ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ブ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "be") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "べ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ベ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぼ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ボ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "pa") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぱ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "パ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "pi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぴ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ピ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "pu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぷ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "プ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "pe") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぺ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ペ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "po") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぽ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ポ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "きゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "キャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "きゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "キュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "きょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "キョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ひゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヒャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ひゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヒュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ひょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ヒョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "sha") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "しゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "シャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "shu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "しゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "シュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "sho") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "しょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ショ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "cha") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ちゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "チャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "chu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ちゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "チュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "cho") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ちょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "チョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "みゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ミャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "myu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "みゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ミュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "myo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "みょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ミョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "nya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "にゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ニャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "nyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "にゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ニュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "nyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "にょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ニョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "rya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "りゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "リャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ryu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "りゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "リュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ryo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "りょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "リョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "gya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぎゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ギャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "gyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぎゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ギュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "gyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぎょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ギョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ja") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "じゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ジャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ju") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "じゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ジュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "jo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "じょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ジョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "びゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ビャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "byu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "びゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ビュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "byo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "びょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ビョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "pya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぴゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ビャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "pyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぴゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ビュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "pyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ぴょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ビョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "xa") {
+        if (kana_toggle === "katakana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ァ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "xi") {
+        if (kana_toggle === "katakana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ィ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "xu") {
+        if (kana_toggle === "katakana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ゥ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "xe") {
+        if (kana_toggle === "katakana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ェ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "xo") {
+        if (kana_toggle === "katakana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ォ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "nn") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ん";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ン";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "xtsu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "xya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "xyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "xyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "ょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == ",") {
+        document.getElementById("DISPLAY_AREA").textContent += "、";
+        document.getElementById("typing").value = "";
+      } else if (text == ".") {
+        document.getElementById("DISPLAY_AREA").textContent += "。";
+        document.getElementById("typing").value = "";
+      } else if (text == "!") {
+        document.getElementById("DISPLAY_AREA").textContent += "！";
+        document.getElementById("typing").value = "";
+      } else if (text == "-") {
+        document.getElementById("DISPLAY_AREA").textContent += "ー";
+        document.getElementById("typing").value = "";
+      } else if (text == "kka") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っか";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッカ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kki") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っき";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッキ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kku") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っく";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ック";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kke") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っけ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッケ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kko") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っこ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッコ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ssa") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っさ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッサ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "sshi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っし";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッシ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ssu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っす";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッス";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "sse") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っせ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッセ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "sso") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っそ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッソ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "tta") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "った";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッタ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "cchi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っち";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッチ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ttsu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っつ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッツ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "tte") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "って";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッテ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "tto") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っと";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ット";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hha") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っは";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッハ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hhi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っひ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッヒ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ffu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っふ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッフ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hhe") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っへ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッヘ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hho") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っほ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッホ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mma") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っま";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッマ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mmi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っみ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッミ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mmu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っむ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッム";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mme") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っめ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッメ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mmo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っも";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッモ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "yya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っや";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッヤ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "yyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っゆ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッユ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "yyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っよ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッヨ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "rra") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っら";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッラ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "rri") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っり";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッリ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "rru") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っる";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッル";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "rre") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っれ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッレ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "rro") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っろ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッロ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "wwa") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っわ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッワ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "gga") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っが";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッガ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ggi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぎ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッギ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ggu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぐ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッグ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "gge") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っげ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッゲ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ggo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っご";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッゴ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "zza") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っざ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッギ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "jji") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っじ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッジ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "zzu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っず";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッズ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "zze") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぜ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッゼ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "zzo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぞ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッゾ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "dda") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っだ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッダ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ddi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぢ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッヂ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ddu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っづ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッヅ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "dde") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っで";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッデ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ddo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っど";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッド";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bba") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っば";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッバ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bbi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っび";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッビ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bbu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぶ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッブ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bbe") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っべ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッベ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bbo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぼ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッボ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ppa") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぱ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッパ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ppi") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぴ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッピ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ppu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぷ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ップ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ppe") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぺ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッペ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ppo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぽ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッポ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kkya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っきゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッキャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kkyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っきゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッキュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "kkyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っきょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッキョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hhya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っひゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッヒャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hhyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っひゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッヒュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "hhyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っひょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッヒョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ssha") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っしゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッシャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "sshu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っしゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッシュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ssho") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っしょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッショ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ccha") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っちゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッチャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "cchu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っちゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッチュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ccho") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っちょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッチョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mmya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っみゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッミャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mmyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っみゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッミュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "mmyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っみょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッミョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "rrya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っりゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッリャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "rryu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っりゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッリュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "rryo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っりょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッリョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ggya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぎゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッギャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ggyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぎゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッギュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ggyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぎょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッギョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "jja") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っじゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッジャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "jju") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っじゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッジュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "jjo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っじょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッジョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bbya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っびゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッビャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bbyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っびゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッビュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "bbyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っびょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッビョ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ppya") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぴゃ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッビャ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ppyu") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぴゅ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッビュ";
+        }
+        document.getElementById("typing").value = "";
+      } else if (text == "ppyo") {
+        if (kana_toggle === "hiragana") {
+          document.getElementById("DISPLAY_AREA").textContent += "っぴょ";
+        } else {
+          document.getElementById("DISPLAY_AREA").textContent += "ッビョ";
+        }
+        document.getElementById("typing").value = "";
+      } else {
+        if (text.length >= 6) {
+          document.getElementById("typing").value = "";
+        }
+      }
+    });
+    window.addEventListener("keydown", (e) => {
+      if (
+        (event.ctrlKey && event.key === "Backspace") ||
+        (event.metaKey && event.key === "Backspace")
+      ) {
+        if (document.getElementById("DISPLAY_AREA").textContent != "") {
+          document.getElementById(
+              "DISPLAY_AREA"
+            ).textContent = document
+            .getElementById("DISPLAY_AREA")
+            .textContent.slice(0, -1);
+        } else {
+          alert("Error: No more characters to delete.");
+        }
+      } else if (
+        (event.ctrlKey && event.key === "Delete") ||
+        (event.metaKey && event.key === "Delete")
+      ) {
+        if (document.getElementById("DISPLAY_AREA").textContent != "") {
+          document.getElementById("DISPLAY_AREA").textContent = "";
+        } else {
+          alert("Error: No more characters to delete.");
+        }
+      } else if (event.key === " ") {
+        event.preventDefault();
+        change_kana();
+      } else if (
+        (event.ctrlKey && event.key === "a") ||
+        (event.ctrlKey && event.key === "A") ||
+        (event.metaKey && event.key === "a") ||
+        (event.metaKey && event.key === "A")
+      ) {
+        event.preventDefault();
+        window
+          .getSelection()
+          .selectAllChildren(document.querySelector("#DISPLAY_AREA"));
+      }
+    });
+    document.querySelector("#typing").addEventListener("keydown", (e) => {
+      if (
+        (event.ctrlKey && event.key === "a") ||
+        (event.ctrlKey && event.key === "A") ||
+        (event.metaKey && event.key === "a") ||
+        (event.metaKey && event.key === "A")
+      ) {
+        event.preventDefault();
+        document.activeElement.blur();
+        window
+          .getSelection()
+          .selectAllChildren(document.querySelector("#DISPLAY_AREA"));
+      }
+    });
+    window.addEventListener("load", order());
+  </script>
+</body>
+
+</html>
