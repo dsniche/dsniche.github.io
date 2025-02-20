@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wine and Food Recipe</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Galada&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+
+    body {
+      background-color: #8a223b;
+      padding: 1.5rem 0.5rem;
+    }
+
+    .one_rem {
+      padding: 1rem;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      max-width: 117px;
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .p-reset {
+      padding: 0 !important;
+      justify-content: flex-start !important;
+      gap: 0.7rem;
+    }
+
+    .w-reset {
+      padding: 0 !important;
+    }
+
+    .positioning {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 1.8rem 1rem 2.5rem;
+    }
+
+    ul {
+      padding-left: 0;
+      list-style: none;
+      margin-top: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    li {
+      padding-bottom: 0.2rem;
+      font-family: "Nunito Sans", serif;
+      color: #8a223b;
+      font-weight: bold;
+    }
+
+    #logo {
+      max-width: 295px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    #profile {
+      max-width: 350px;
+      width: 100%;
+      background-color: #fafafa;
+      box-shadow: 7px 7px #1414148a;
+    }
+
+    #details {
+      width: 100%;
+      background: #efe9d3;
+      padding: 0.5rem;
+      border: 2px solid #8c7460;
+      margin-top: -3rem;
+      margin-right: -0.9rem;
+      position: relative;
+      border-radius: 4px;
+    }
+
+    .vineyard {
+      width: 100%;
+      align-self: flex-end;
+      margin-top: 0.5rem;
+      margin-right: -0.1rem;
+    }
+
+    #details h2 {
+      margin-top: 0;
+      color: #8a223b;
+      font-family: serif;
+      font-size: 14.5pt;
+    }
+
+    #stats {
+      width: fit-content;
+      padding: 0 1rem 1.2rem 1rem;
+      border: 2px solid #0095c6;
+      background-color: #9ad5e8;
+      margin: 0 auto;
+      border-radius: 4px;
+    }
+
+    #profile h3 {
+      font-family: "Nunito Sans", serif;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #profile h3 {
+      margin-top: 0.55rem;
+      margin-bottom: 0.4rem;
+      color: #8a223b;
+    }
+
+    .level {
+      width: 25px;
+      height: 40px;
+      background-color: #5dbbda;
+      border-radius: 4px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 0.32rem;
+      justify-content: center;
+    }
+
+    .plus {
+      background-color: #8a223b;
+    }
+
+    .final::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-bottom: 14px solid #fff;
+      margin-top: 2.056rem;
+      margin-left: 0.2rem;
+    }
+
+    @media only screen and (max-width: 375px) {
+      #details {
+        width: unset;
+        border: 2px solid #8c7460;
+        margin-top: 0;
+        margin-right: 0;
+        position: unset;
+      }
+
+      .vineyard {
+        align-self: flex-end;
+        margin-top: unset;
+        margin-right: unset;
+      }
+
+      .positioning {
+        justify-content: center;
+      }
+
+      #logo {
+        max-width: 280px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .w-reset {
+        margin-top: -2rem;
+      }
+
+      .center {
+        margin-top: 0.3rem;
+      }
+    }
+
+    @media only screen and (max-width: 340px) {
+      #details h2 {
+        font-size: 12pt;
+      }
+
+      #profile h3 {
+        font-size: 12pt;
+      }
+
+      li {
+        font-size: 10pt;
+      }
+
+      #logo {
+        max-width: 235px;
+      }
+
+      #stats {
+        padding: 0 0.5rem 1.2rem 0.5rem;
+        margin: 0 auto;
+        border-radius: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="profile">
+    <div class="one_rem">
+      <div class="center">
+        <img id="logo" src="https://i.imgur.com/mJJjiqq.png" />
+      </div>
+      <div class="positioning w-reset">
+        <div class="column">
+          <div id="details">
+            <h2>WINE</h2>
+            <ul>
+              <li>Year</li>
+              <li>Type</li>
+              <li>Price</li>
+            </ul>
+          </div>
+          <img class="vineyard" src="https://i.imgur.com/du1l7yO.png" />
+        </div>
+        <div id="stats">
+          <h3>FRUITY</h3>
+          <div id="fruity" class="stats">
+            <div class="level plus"></div>
+            <div class="level plus"></div>
+            <div class="level plus final"></div>
+            <div class="level"></div>
+            <div class="level"></div>
+          </div>
+          <h3>BODY</h3>
+          <div id="body" class="stats">
+            <div class="level plus"></div>
+            <div class="level plus final"></div>
+            <div class="level"></div>
+            <div class="level"></div>
+            <div class="level"></div>
+          </div>
+          <h3>TANNIN</h3>
+          <div id="tannin" class="stats">
+            <div class="level plus"></div>
+            <div class="level plus"></div>
+            <div class="level plus"></div>
+            <div class="level plus final"></div>
+            <div class="level"></div>
+          </div>
+          <h3>ACIDITY</h3>
+          <div id="acidity" class="stats">
+            <div class="level plus"></div>
+            <div class="level plus"></div>
+            <div class="level plus final"></div>
+            <div class="level"></div>
+            <div class="level"></div>
+          </div>
+          <h3>ALCOHOL</h3>
+          <div id="alcohol" class="stats">
+            <div class="level plus"></div>
+            <div class="level plus"></div>
+            <div class="level plus final"></div>
+            <div class="level"></div>
+            <div class="level"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button>Print Recipe Card</button>
+</body>
+<script>
+  const print = document.querySelector("button");
+  print.addEventListener("click", (e) => {
+    window.print();
+  })
+</script>
+
+</html>
