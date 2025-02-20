@@ -4,16 +4,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wine and Food Recipe</title>
+  <title>Module 1 Wine Profile and Recipe</title>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Galada&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 
-    body {
-      background-color: #8a223b;
-      padding: 1.5rem 0.5rem;
-	  overflow: hidden;
+    :root {
+      --print-profile: unset;
+      --print-recipe: unset;
+      --primary-color: #8a223b;
     }
 
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-color) var(--secondary-color)
+    }
+
+    *::-webkit-scrollbar {
+      width: 6px
+    }
+
+    *::-webkit-scrollbar-track {
+      background: var(--secondary-color)
+    }
+
+    *::-webkit-scrollbar-thumb {
+      background-color: var(--primary-color);
+      border-radius: 5px
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--primary-color);
+      padding: 0.5rem;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #card {
+      background-color: #faf7ef;
+      aspect-ratio: 800 / 621;
+      max-height: 622px;
+      max-width: 800px;
+      position: relative;
+      overflow: hidden;
+      align-self: center;
+    }
+
+    #card_outline {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #contents {
+      position: absolute;
+      top: 0;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .bookmark {
+      max-width: 215px;
+      width: 100%;
+      margin-top: -5rem;
+      position: relative;
+      z-index: 0;
+      align-content: space-between;
+    }
+
+    #title {
+      margin-top: 2rem;
+      margin-left: 1.3rem;
+      position: relative;
+      z-index: 11;
+    }
+
+    .positioning {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 1.8rem 1rem 2.5rem;
+    }
+
+    .positioning-2 {
+      display: flex;
+      flex-direction: column;
+      align-items: space-between;
+      position: relative;
+      z-index: 10;
+    }
+
+    #title p,
+    #directions h2,
+    #ingredients h2 {
+      font-family: "Nunito Sans", serif;
+      font-size: 20pt;
+      color: #000000bb;
+      letter-spacing: 2px;
+      margin: 0;
+      font-weight: normal;
+    }
+
+    #title h1 {
+      font-family: serif;
+      font-size: 40pt;
+      margin: 0.2rem 0 0 1.2rem;
+      font-style: italic;
+      line-height: 110%;
+    }
+
+    #directions {
+      margin-left: 1.3rem;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    #ingredients {
+      max-width: 260px;
+      width: 100%;
+    }
+
+    ul {
+      padding-left: 17px;
+      list-style: none;
+    }
+
+    #i-list li {
+      padding-bottom: 0.5rem;
+    }
+
+    #i-list li:before {
+      content: "";
+      position: absolute;
+      margin-top: 0.45rem;
+      margin-left: -0.8125rem;
+      background: var(--primary-color);
+      border-radius: 50%;
+      width: 0.3125rem;
+      height: 0.3125rem;
+    }
+
+    #subtitle {
+      font-family: serif;
+      font-size: 26pt;
+      font-style: italic;
+      font-weight: bold;
+      text-align: center;
+      margin-top: -0.7rem;
+      margin-bottom: 0;
+      letter-spacing: 2px;
+    }
+
+    #attribution {
+      margin: 0.2rem auto 0 auto;
+      text-align: center;
+      font-size: 8pt;
+      font-family: "DM Sans", serif;
+      color: #000000bb;
+      letter-spacing: 1px;
+    }
+
+    .author {
+      font-weight: bold;
+    }
+
+    #mobile {
+      display: none;
+    }
+
+    #mobile-attribution {
+      display: none;
+    }
+
+    /* WINE PROFILE */
     .one_rem {
       padding: 1rem;
     }
@@ -32,28 +199,25 @@
 
     .p-reset {
       padding: 0 !important;
-      justify-content: flex-start !important;
+      justify-content: center !important;
       gap: 0.7rem;
+      max-height: 660px;
+      align-items: center;
+      overflow: auto;
     }
 
     .w-reset {
       padding: 0 !important;
     }
 
-    .positioning {
-      display: flex;
-      justify-content: space-between;
-      padding: 1rem 1.8rem 1rem 2.5rem;
-    }
-
-    ul {
+    #meta {
       padding-left: 0;
       list-style: none;
       margin-top: 0.3rem;
       margin-bottom: 0.3rem;
     }
 
-    li {
+    #meta li {
       padding-bottom: 0.2rem;
       font-family: "Nunito Sans", serif;
       color: #8a223b;
@@ -71,7 +235,8 @@
       max-width: 350px;
       width: 100%;
       background-color: #fafafa;
-      box-shadow: 7px 7px #1414148a;
+      box-shadow: 6px 5px #14141440;
+      max-height: 622px;
     }
 
     #details {
@@ -92,9 +257,15 @@
       margin-right: -0.1rem;
     }
 
+    #details h1 {
+      font-size: 1px;
+      color: transparent;
+      position: absolute;
+    }
+
     #details h2 {
       margin-top: 0;
-      color: #8a223b;
+      color: var(--primary-color);
       font-family: serif;
       font-size: 14.5pt;
     }
@@ -117,7 +288,7 @@
     #profile h3 {
       margin-top: 0.55rem;
       margin-bottom: 0.4rem;
-      color: #8a223b;
+      color: var(--primary-color);
     }
 
     .level {
@@ -134,7 +305,7 @@
     }
 
     .plus {
-      background-color: #8a223b;
+      background-color: var(--primary-color);
     }
 
     .final::after {
@@ -149,6 +320,157 @@
       margin-left: 0.2rem;
     }
 
+    button {
+      background-color: transparent;
+      padding: 0;
+      border: none;
+      font-size: 8pt;
+      font-family: "DM Sans", serif;
+      font-weight: bold;
+    }
+
+    button:hover {
+      text-decoration: underline;
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    @media only screen and (max-width: 1117px) {
+      #subtitle {
+        font-size: 20pt;
+        margin-top: -1rem;
+      }
+
+      .positioning-2 {
+        margin-top: -1rem;
+      }
+    }
+
+    @media only screen and (max-width: 1080px) {
+      #subtitle {
+        font-size: 18pt;
+        margin-top: -1.5rem;
+      }
+
+      #attribution {
+        margin-top: -0.1rem;
+      }
+    }
+
+    @media only screen and (max-width: 1060px) {
+
+      #directions h2,
+      #ingredients h2,
+      #title p {
+        font-size: 14pt;
+      }
+
+      .bookmark {
+        display: none;
+      }
+
+      .positioning-2 {
+        margin-top: 0;
+      }
+
+      #title h1 {
+        font-size: 25pt;
+        margin-left: 0;
+      }
+
+      #title {
+        text-align: center;
+        margin: 1rem auto 1rem auto;
+      }
+
+      #subtitle {
+        font-size: 16pt;
+        margin-top: -1rem;
+      }
+
+      #attribution {
+        display: none;
+      }
+
+      #mobile-attribution {
+        display: block;
+        font-family: "DM Sans", serif;
+        font-size: 8pt !important;
+        margin-top: 0.2rem !important;
+      }
+    }
+
+    @media only screen and (max-width: 950px) {
+
+      #directions h2,
+      #ingredients h2,
+      #title p {
+        font-size: 14pt;
+      }
+
+      .positioning {
+        padding: 1rem 1.2rem;
+      }
+
+      .positioning-2 {
+        margin-top: -0.5rem;
+      }
+
+      #title h1 {
+        font-size: 22pt;
+      }
+
+      #directions,
+      #ingredients {
+        font-family: "DM Sans", serif;
+        font-size: 10pt;
+      }
+
+      #subtitle {
+        font-size: 14pt;
+        margin-top: -1.5rem;
+      }
+    }
+
+    @media only screen and (max-width: 910px) {
+      .positioning-2 {
+        display: none;
+      }
+
+      #mobile {
+        display: block;
+        padding: 0 2rem;
+        font-family: "DM Sans", serif;
+        margin-top: -2rem;
+        text-align: center;
+      }
+    }
+
+    @media only screen and (max-width: 660px) {
+      #title h1 {
+        font-size: 16pt;
+      }
+
+      #title p {
+        font-size: 12pt;
+      }
+
+      #mobile {
+        font-size: 10pt;
+      }
+    }
+
+    @media only screen and (max-width: 615px) {
+      .p-reset {
+        flex-wrap: wrap;
+      }
+
+      #card {
+        max-width: 350px;
+      }
+    }
+
+    /*WINE PROFILE */
     @media only screen and (max-width: 375px) {
       #details {
         width: unset;
@@ -184,6 +506,7 @@
       }
     }
 
+    /* WINE PROFILE */
     @media only screen and (max-width: 340px) {
       #details h2 {
         font-size: 12pt;
@@ -207,79 +530,226 @@
         border-radius: 4px;
       }
     }
+
+    @media only screen and (max-width: 315px) {
+      #logo {
+        display: none;
+      }
+
+      .vineyard {
+        display: none;
+      }
+
+      #stats {
+        background-color: unset;
+        border: unset;
+        padding: 0 0.5rem 0.5rem 0.5rem;
+      }
+
+      .w-reset {
+        margin-top: unset;
+      }
+
+      .level {
+        width: 17px;
+        height: 25px;
+        background-color: #14141430;
+        border-radius: 4px;
+      }
+
+      .plus {
+        background-color: var(--primary-color);
+      }
+
+      .final::after {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 10px solid #5dbbda;
+        margin-top: 1.25rem;
+        margin-left: 0.2rem;
+      }
+
+      .column {
+        max-width: unset;
+      }
+
+      #details {
+        border: unset;
+        background-color: unset;
+      }
+
+      #details h1 {
+        font-size: unset;
+        color: unset;
+        position: unset;
+        color: #0095c6;
+        font-size: 15pt;
+        font-weight: bold;
+      }
+
+      .mobile-flex {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .mobile-flex h3 {
+        font-size: 10pt !important;
+        max-width: 100px;
+        width: 100%;
+      }
+
+      .positioning {
+        flex-direction: column;
+      }
+    }
+
+    @media print {
+      #profile {
+        display: var(--print-profile);
+      }
+
+      #card {
+        display: var(--print-recipe);
+      }
+
+      #print {
+        display: none;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div id="profile">
-    <div class="one_rem">
-      <div class="center">
-        <img id="logo" src="https://i.imgur.com/mJJjiqq.png" />
-      </div>
-      <div class="positioning w-reset">
-        <div class="column">
-          <div id="details">
-            <h2>WINE</h2>
-            <ul>
-              <li>Year</li>
-              <li>Type</li>
-              <li>Price</li>
-            </ul>
-          </div>
-          <img class="vineyard" src="https://i.imgur.com/du1l7yO.png" />
+  <div class="positioning p-reset">
+    <div id="profile">
+      <div class="one_rem">
+        <div class="center">
+          <img id="logo" src="https://i.imgur.com/mJJjiqq.png" />
         </div>
-        <div id="stats">
-          <h3>FRUITY</h3>
-          <div id="fruity" class="stats">
-            <div class="level plus"></div>
-            <div class="level plus"></div>
-            <div class="level plus final"></div>
-            <div class="level"></div>
-            <div class="level"></div>
+        <div class="positioning w-reset">
+          <div class="column">
+            <div id="details">
+              <h1>WINE PROFILE at a glance</h1>
+              <h2>WINE</h2>
+              <ul id="meta">
+                <li>Year</li>
+                <li>Type</li>
+                <li>Price</li>
+                <li><button class="print print-hide" type="button">Print Wine Profile</button></li>
+              </ul>
+            </div>
+            <img class="vineyard" src="https://i.imgur.com/du1l7yO.png" />
           </div>
-          <h3>BODY</h3>
-          <div id="body" class="stats">
-            <div class="level plus"></div>
-            <div class="level plus final"></div>
-            <div class="level"></div>
-            <div class="level"></div>
-            <div class="level"></div>
-          </div>
-          <h3>TANNIN</h3>
-          <div id="tannin" class="stats">
-            <div class="level plus"></div>
-            <div class="level plus"></div>
-            <div class="level plus"></div>
-            <div class="level plus final"></div>
-            <div class="level"></div>
-          </div>
-          <h3>ACIDITY</h3>
-          <div id="acidity" class="stats">
-            <div class="level plus"></div>
-            <div class="level plus"></div>
-            <div class="level plus final"></div>
-            <div class="level"></div>
-            <div class="level"></div>
-          </div>
-          <h3>ALCOHOL</h3>
-          <div id="alcohol" class="stats">
-            <div class="level plus"></div>
-            <div class="level plus"></div>
-            <div class="level plus final"></div>
-            <div class="level"></div>
-            <div class="level"></div>
+          <div id="stats">
+            <div class="mobile-flex">
+              <h3>FRUITY</h3>
+              <div id="fruity" class="stats">
+                <div class="level plus"></div>
+                <div class="level plus"></div>
+                <div class="level plus final"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+              </div>
+            </div>
+            <div class="mobile-flex">
+              <h3>BODY</h3>
+              <div id="body" class="stats">
+                <div class="level plus"></div>
+                <div class="level plus final"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+              </div>
+            </div>
+            <div class="mobile-flex">
+              <h3>TANNIN</h3>
+              <div id="tannin" class="stats">
+                <div class="level plus"></div>
+                <div class="level plus"></div>
+                <div class="level plus"></div>
+                <div class="level plus final"></div>
+                <div class="level"></div>
+              </div>
+            </div>
+            <div class="mobile-flex">
+              <h3>ACIDITY</h3>
+              <div id="acidity" class="stats">
+                <div class="level plus"></div>
+                <div class="level plus"></div>
+                <div class="level plus final"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+              </div>
+            </div>
+            <div class="mobile-flex">
+              <h3>ALCOHOL</h3>
+              <div id="alcohol" class="stats">
+                <div class="level plus"></div>
+                <div class="level plus"></div>
+                <div class="level plus final"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div id="card">
+      <img id="card_outline" src="https://i.imgur.com/FQtVoJt.png" />
+      <div id="contents">
+        <div class="positioning">
+          <div id="title">
+            <p>HOW TO MAKE</p>
+            <h1>Gorgonzola Cheese Sauce</h1>
+            <p id="mobile-attribution">Recipe courtesy of <span class="author">Sara</span> at <span class="link">allrecipes.com</span><span class="print_hide"> | <button class="print" type="button">Print Recipe</button></span></p>
+          </div>
+          <img class="bookmark" src="https://i.imgur.com/l1FVtyM.png" />
+        </div>
+        <div class="positioning-2">
+          <div class="positioning" style="margin-top: -1rem; gap: 1.5rem;">
+            <div id="directions">
+              <h2>DIRECTIONS</h2>
+              <p>Melt butter in a medium saucepan over medium-low heat. Stir in flour, then milk. When mixture begins to thicken, stir in cheese. Cook until cheese is melted and sauce reaches desired consistency. Season with salt and pepper.</p>
+            </div>
+            <div id="ingredients">
+              <h2>INGREDIENTS</h2>
+              <ul id="i-list">
+                <li>3 tablespoons butter</li>
+                <li>3 tablespoons all-purpose flour</li>
+                <li>3 cups milk</li>
+                <li>⅓ cup crumbled Gorgonzola cheese</li>
+                <li>¼ teaspoon salt</li>
+                <li>¼ teaspoon black pepper</li>
+              </ul>
+            </div>
+          </div>
+          <p id="subtitle">Enjoy with your favorite bottle of wine</p>
+          <p id="attribution">Recipe courtesy of <span class="author">Sara</span> at <span class="link">allrecipes.com</span><span class="print_hide"> | <button class="print" type="button">Print Recipe</button></span></p>
+        </div>
+        <div id="mobile">
+          <p><a href="#">View Recipe</a></p>
+        </div>
+      </div>
+    </div>
   </div>
-  <button>Print Recipe Card</button>
 </body>
 <script>
-  const print = document.querySelector("button");
-  print.addEventListener("click", (e) => {
-    window.print();
-  })
+  const print = document.querySelectorAll("button");
+  const cssVariables = document.querySelector(":root");
+  for (let i = 0; i < print.length; i++) {
+    print[i].addEventListener("click", (e) => {
+      if (i === 0) {
+        cssVariables.style.setProperty("--print-profile", "initial");
+        cssVariables.style.setProperty("--print-recipe", "none");
+      } else {
+        cssVariables.style.setProperty("--print-profile", "none");
+        cssVariables.style.setProperty("--print-recipe", "initial");
+      }
+      window.print();
+    });
+  }
 </script>
 
 </html>
