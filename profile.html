@@ -16,20 +16,20 @@
 
     * {
       scrollbar-width: thin;
-      scrollbar-color: var(--primary-color) var(--secondary-color)
+      scrollbar-color: var(--primary-color) var(--secondary-color);
     }
 
     *::-webkit-scrollbar {
-      width: 6px
+      width: 6px;
     }
 
     *::-webkit-scrollbar-track {
-      background: var(--secondary-color)
+      background: var(--secondary-color);
     }
 
     *::-webkit-scrollbar-thumb {
       background-color: var(--primary-color);
-      border-radius: 5px
+      border-radius: 5px;
     }
 
     html {
@@ -170,6 +170,10 @@
 
     .author {
       font-weight: bold;
+    }
+
+    .link {
+      font-style: italic;
     }
 
     #mobile {
@@ -631,12 +635,12 @@
           <div class="column">
             <div id="details">
               <h1>WINE PROFILE at a glance</h1>
-              <h2>WINE</h2>
+              <h2 id="wine_name">Name</h2>
               <ul id="meta">
-                <li>Year</li>
-                <li>Type</li>
-                <li>Price</li>
-                <li><button class="print print-hide" type="button">Print Wine Profile</button></li>
+                <li id="wine_year">Year</li>
+                <li id="wine_type">Type</li>
+                <li id="wine_price">Price</li>
+                <li><button class="print print_hide" type="button">Print Wine Profile</button></li>
               </ul>
             </div>
             <img class="vineyard" src="https://i.imgur.com/du1l7yO.png" />
@@ -645,9 +649,9 @@
             <div class="mobile-flex">
               <h3>FRUITY</h3>
               <div id="fruity" class="stats">
-                <div class="level plus"></div>
-                <div class="level plus"></div>
-                <div class="level plus final"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+                <div class="level"></div>
                 <div class="level"></div>
                 <div class="level"></div>
               </div>
@@ -655,8 +659,8 @@
             <div class="mobile-flex">
               <h3>BODY</h3>
               <div id="body" class="stats">
-                <div class="level plus"></div>
-                <div class="level plus final"></div>
+                <div class="level"></div>
+                <div class="level"></div>
                 <div class="level"></div>
                 <div class="level"></div>
                 <div class="level"></div>
@@ -665,19 +669,19 @@
             <div class="mobile-flex">
               <h3>TANNIN</h3>
               <div id="tannin" class="stats">
-                <div class="level plus"></div>
-                <div class="level plus"></div>
-                <div class="level plus"></div>
-                <div class="level plus final"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+                <div class="level"></div>
                 <div class="level"></div>
               </div>
             </div>
             <div class="mobile-flex">
               <h3>ACIDITY</h3>
               <div id="acidity" class="stats">
-                <div class="level plus"></div>
-                <div class="level plus"></div>
-                <div class="level plus final"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+                <div class="level"></div>
                 <div class="level"></div>
                 <div class="level"></div>
               </div>
@@ -685,9 +689,9 @@
             <div class="mobile-flex">
               <h3>ALCOHOL</h3>
               <div id="alcohol" class="stats">
-                <div class="level plus"></div>
-                <div class="level plus"></div>
-                <div class="level plus final"></div>
+                <div class="level"></div>
+                <div class="level"></div>
+                <div class="level"></div>
                 <div class="level"></div>
                 <div class="level"></div>
               </div>
@@ -702,8 +706,8 @@
         <div class="positioning">
           <div id="title">
             <p>HOW TO MAKE</p>
-            <h1>Gorgonzola Cheese Sauce</h1>
-            <p id="mobile-attribution">Recipe courtesy of <span class="author">Sara</span> at <span class="link">allrecipes.com</span><span class="print_hide"> | <button class="print" type="button">Print Recipe</button></span></p>
+            <h1 id="dish_title">Dish Title</h1>
+            <p id="mobile-attribution">Recipe courtesy of <span class="author">Author</span> at <a href="#" class="link">website</a><span class="print_hide"> | <button class="print" type="button">Print Recipe</button></span></p>
           </div>
           <img class="bookmark" src="https://i.imgur.com/l1FVtyM.png" />
         </div>
@@ -711,22 +715,15 @@
           <div class="positioning" style="margin-top: -1rem; gap: 1.5rem;">
             <div id="directions">
               <h2>DIRECTIONS</h2>
-              <p>Melt butter in a medium saucepan over medium-low heat. Stir in flour, then milk. When mixture begins to thicken, stir in cheese. Cook until cheese is melted and sauce reaches desired consistency. Season with salt and pepper.</p>
             </div>
             <div id="ingredients">
               <h2>INGREDIENTS</h2>
               <ul id="i-list">
-                <li>3 tablespoons butter</li>
-                <li>3 tablespoons all-purpose flour</li>
-                <li>3 cups milk</li>
-                <li>⅓ cup crumbled Gorgonzola cheese</li>
-                <li>¼ teaspoon salt</li>
-                <li>¼ teaspoon black pepper</li>
               </ul>
             </div>
           </div>
           <p id="subtitle">Enjoy with your favorite bottle of wine</p>
-          <p id="attribution">Recipe courtesy of <span class="author">Sara</span> at <span class="link">allrecipes.com</span><span class="print_hide"> | <button class="print" type="button">Print Recipe</button></span></p>
+          <p id="attribution">Recipe courtesy of <span class="author">Author</span> at <a href="#" class="link">website</a><span class="print_hide"> | <button class="print" type="button">Print Recipe</button></span></p>
         </div>
         <div id="mobile">
           <p><a href="#">View Recipe</a></p>
@@ -736,6 +733,109 @@
   </div>
 </body>
 <script>
+  const url = new URL(location.href);
+  const wine = url.searchParams.get("wine");
+  const data = {
+    cava: {
+      name: "Cava",
+      year: "1999",
+      type: "N/A",
+      price: "Too Expensive",
+      ratings: [3, 4, 1, 1, 5],
+      recipe: {
+        name: "Gorgonzola Cheese Sauce",
+        directions: "Melt butter in a medium saucepan over medium-low heat. Stir in flour, then milk. When mixture begins to thicken, stir in cheese. Cook until cheese is melted and sauce reaches desired consistency. Season with salt and pepper.",
+        ingredients: [
+          "3 tablespoons butter",
+          "3 tablespoons all-purpose flour",
+          "3 cups milk",
+          "⅓ cup crumbled Gorgonzola cheese",
+          "¼ teaspoon salt",
+          "¼ teaspoon black pepper"
+        ],
+        attr_name: "Sara",
+        attr_site: "allrecipes.com",
+        attr_link: "https://www.allrecipes.com/recipe/25299/gorgonzola-cheese-sauce/?print"
+      }
+    }
+  };
+  document.querySelector("#wine_name").textContent = data[wine]["name"];
+  document.querySelector("#wine_year").textContent = data[wine]["year"];
+  document.querySelector("#wine_type").textContent = data[wine]["type"];
+  document.querySelector("#wine_price").textContent = data[wine]["price"];
+  const fruity = document.querySelector("#fruity").children;
+  const body = document.querySelector("#body").children;
+  const tannin = document.querySelector("#tannin").children;
+  const acidity = document.querySelector("#acidity").children;
+  const alcohol = document.querySelector("#alcohol").children;
+  for (let i = 0; i < data[wine]["ratings"].length; i++) {
+    if (i == 0) {
+      let score = data[wine]["ratings"][i];
+      for (let ii = 0; ii < score; ii++) {
+        fruity[ii].classList.add("plus");
+        if (ii == score - 1) {
+          fruity[ii].classList.add("final");
+        }
+      }
+    } else if (i == 1) {
+      let score = data[wine]["ratings"][i];
+      for (let ii = 0; ii < score; ii++) {
+        body[ii].classList.add("plus");
+        if (ii == score - 1) {
+          body[ii].classList.add("final");
+        }
+      }
+    } else if (i == 2) {
+      let score = data[wine]["ratings"][i];
+      for (let ii = 0; ii < score; ii++) {
+        tannin[ii].classList.add("plus");
+        if (ii == score - 1) {
+          tannin[ii].classList.add("final");
+        }
+      }
+    } else if (i == 3) {
+      let score = data[wine]["ratings"][i];
+      for (let ii = 0; ii < score; ii++) {
+        acidity[ii].classList.add("plus");
+        if (ii == score - 1) {
+          acidity[ii].classList.add("final");
+        }
+      }
+    } else {
+      let score = data[wine]["ratings"][i];
+      for (let ii = 0; ii < score; ii++) {
+        alcohol[ii].classList.add("plus");
+        if (ii == score - 1) {
+          alcohol[ii].classList.add("final");
+        }
+      }
+    }
+  }
+  document.querySelector("#dish_title").textContent =
+    data[wine]["recipe"]["name"];
+  document.querySelector("#directions").insertAdjacentHTML(
+    "beforeend",
+    `
+  <p>${data[wine]["recipe"]["directions"]}</p>
+  `
+  );
+  const ingredients = document.querySelector("#i-list");
+  for (let i = 0; i < data[wine]["recipe"]["ingredients"].length; i++) {
+    const li = document.createElement("li");
+    const content = document.createTextNode(
+      data[wine]["recipe"]["ingredients"][i]
+    );
+    li.appendChild(content);
+    ingredients.appendChild(li);
+  }
+  const links = document.querySelectorAll(".link");
+  const author = document.querySelectorAll(".author");
+  for (let i = 0; i < links.length; i++) {
+    links[i].textContent = data[wine]["recipe"]["attr_site"];
+    links[i].href = data[wine]["recipe"]["attr_link"];
+    links[i].setAttribute("target", "_blank");
+    author[i].textContent = data[wine]["recipe"]["attr_name"];
+  }
   const print = document.querySelectorAll("button");
   const cssVariables = document.querySelector(":root");
   for (let i = 0; i < print.length; i++) {
