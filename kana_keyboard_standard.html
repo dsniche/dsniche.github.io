@@ -34,7 +34,7 @@
     summary,
     #bug_report summary {
       background-color: #122863e5;
-      color: #ffffffd5;
+      color: #ffffff;
       padding: 0.5rem;
       border-radius: 5px 5px 0 0;
       cursor: pointer;
@@ -50,7 +50,8 @@
       margin-bottom: 0;
     }
 
-    #bug_notes_list {
+    #bug_notes_list,
+    #patch_notes {
       padding-left: 22px;
       margin-top: 0;
     }
@@ -61,7 +62,8 @@
       list-style: none;
     }
 
-    #bug_notes_list>li {
+    #bug_notes_list>li,
+    #patch_notes>li {
       line-height: unset;
       list-style: unset;
     }
@@ -107,14 +109,14 @@
 
     .information,
     #bug_report .information {
-      background-color: #12286320;
+      background-color: #E1E4EB;
       padding: 0.7rem;
       border-radius: 0 0 5px 5px;
       font-size: 12pt;
     }
 
     #bug_report .information {
-      background-color: #8a310020;
+      background-color: #F0E5DF;
     }
 
     .information p {
@@ -160,7 +162,7 @@
       font-family: "Noto Sans JP", sans-serif;
       padding: 0 0.5rem;
       border: 1px solid #12286390;
-      background-color: #12286335;
+      background-color: #CED2DF;
       font-size: 16pt;
       max-width: 526px;
       width: 100%;
@@ -220,7 +222,8 @@
     #kana,
     #backspace,
     #help,
-    #return {
+    #return,
+    #selectall {
       display: flex;
       align-items: center;
       padding: 0.2rem 0.4rem;
@@ -242,12 +245,12 @@
 
     #help img {
       max-width: 15px;
-      filter: invert(90%);
+      filter: invert(100%);
     }
 
     #kana img {
       max-width: 20px;
-      filter: invert(90%);
+      filter: invert(100%);
     }
 
     #return img {
@@ -255,10 +258,14 @@
       filter: invert(90%);
     }
 
+    #selectall img {
+      max-width: 16px;
+    }
+
     #kana,
     #return {
       background-color: #141414ee;
-      color: #ffffffd5;
+      color: #ffffff;
       border-radius: 4px;
       border: none;
       font-weight: bold;
@@ -272,7 +279,7 @@
 
     #help {
       background-color: #122863e5;
-      color: #ffffffd5;
+      color: #ffffff;
       border-radius: 4px;
       border: none;
       font-weight: bold;
@@ -306,6 +313,26 @@
 
     #copyright img {
       max-width: 8px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #DISPLAY_AREA {
+        background-color: #fff;
+      }
+
+      #kana,
+      #return {
+        background-color: #8a3100;
+        color: #fff;
+      }
+
+      h1 {
+        background-color: #8a3100;
+      }
+
+      #bug_report summary {
+        background-color: #5d0718;
+      }
     }
 
     @media screen and (max-width: 550px) {
@@ -441,6 +468,7 @@
     </div>
     <div id="options">
       <button id="kana"><img src="https://www.svgrepo.com/show/489164/swap.svg" aria-hidden="true" /><span id="update">カタカナ</span></button>
+      <button id="selectall"><img src="https://www.svgrepo.com/show/435415/select.svg" aria-hidden="true" /><span>Select</button>
       <button id="copy"><img src="https://www.svgrepo.com/show/488885/copy-1.svg" aria-hidden="true" /><span>Copy</span></button>
       <button id="backspace"><img src="https://www.svgrepo.com/show/342967/backspace.svg" aria-hidden="true" /><span>Backspace</span></button>
       <button id="delete"><img src="https://www.svgrepo.com/show/368049/delete.svg" aria-hidden="true" /><span>Delete</span></button>
@@ -449,7 +477,7 @@
   </div>
   <div id="help_information" class="hidden">
     <h1>Kana Keyboard Help Page</h1>
-    <span id="ver">Kana Keyboard Ver. 3.5 | Mode: <em>Standard</em></span>
+    <span id="ver">Kana Keyboard Ver. 3.6 | Mode: <em>Standard</em></span>
     <p style="margin-top: 1.5rem;">Thank you for using the Kana Keyboard. This page contains information pertaining to available features and updates for the keyboard. For additional assistance please contact your instructor.</p>
     <div class="information_container">
       <details>
@@ -523,10 +551,27 @@
           <p><em>**Additional exclusive katakana characters can be accessed by typing x then the associated romaji.</em></p>
         </div>
       </details>
+      <details>
+        <summary>Patch Notes</summary>
+        <div class="information">
+          <p>Tracking updates and changes implemented after version 3.5.</p><br>
+          <p><strong>March 26, 20226 | Version 3.6</strong></p><br>
+          <ul id="patch_notes">
+            <li>Updated style sheet for better accessibility with dark mode.</li>
+            <li>Added <strong>Select</strong> button
+              <ul>
+                <li style="list-style-type: circle">Select button selects all of the text in the display area (same functionality as CTRL + A or META KEY + A).</li>
+                <li style="list-style-type: circle">Added to improve functionality for mobile users when using keyboard in Canvas App.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </details>
       <details id="bug_report">
         <summary>Bug Notes</summary>
         <div class="information">
           <ul id="bug_notes_list">
+            <li>Copy Button does not work in Canvas Student Mobile App. Confirmed in iPadOS and Android. <em>(3/26/26)</em></li>
             <li>The Copy Button does not work with New Quizzes in Canvas. <em>(8/31/24)</em></li>
             <li>Kana Keyboard blocked in Canvas via FireFox with New Quizzes. Error reports due to CAS. <em>(8/31/24)</em></li>
             <li>Mobile Device users reportedly get native permissions inaccessible error for Kana Keyboard. Commonly associated with users in Canvas Student app and Safari browser. <em>(8/31/24)</em></li>
@@ -537,10 +582,11 @@
     <br />
     <button id="return"><img src="https://www.svgrepo.com/show/101168/go-back-arrow.svg" aria-hidden="true" /><span id="update">Return</span></button>
   </div>
-  <p id="copyright">Kana Keyboard. <img src="https://www.svgrepo.com/show/102010/copyright-symbol.svg" aria-hidden="true" /> Copyright 2025 Darian Saffold. All rights reserved.</p>
+  <p id="copyright">Kana Keyboard. <img src="https://www.svgrepo.com/show/102010/copyright-symbol.svg" aria-hidden="true" /> Copyright 2026 Darian Saffold. All rights reserved.</p>
   <script>
     let kana_toggle = "hiragana";
     const kana = document.querySelector("#kana");
+    const selectall = document.querySelector("#selectall");
     const copy = document.querySelector("#copy");
     const backspace = document.querySelector("#backspace");
     const remove = document.querySelector("#delete");
@@ -588,6 +634,11 @@
       document.querySelector("#app").classList.remove("hidden");
       document.querySelector("#help_information").classList.add("hidden");
     });
+    selectall.addEventListener("click", (e) => {
+      window
+        .getSelection()
+        .selectAllChildren(document.querySelector("#DISPLAY_AREA"));
+    })
 
     function change_kana() {
       if (kana_toggle === "hiragana") {
