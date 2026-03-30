@@ -51,7 +51,7 @@
     }
 
     #bug_notes_list,
-    #patch_notes {
+    .patch_notes {
       padding-left: 22px;
       margin-top: 0;
     }
@@ -63,7 +63,7 @@
     }
 
     #bug_notes_list>li,
-    #patch_notes>li {
+    .patch_note>li {
       line-height: unset;
       list-style: unset;
     }
@@ -213,7 +213,9 @@
     #options {
       display: flex;
       gap: 0.4rem;
-      margin-top: 0.4rem;
+      width: 98%;
+      justify-content: space-between;
+      box-sizing: border-box;
     }
 
     #kana,
@@ -365,6 +367,14 @@
   <div id="app">
     <div id="DISPLAY_AREA" readonly></div>
     <textarea id="typing" placeholder="Type romaji here or use the keyboard below."></textarea>
+    <div id="options">
+      <button id="kana"><img src="https://www.svgrepo.com/show/489164/swap.svg" aria-hidden="true" /><span id="update">カタカナ</span></button>
+      <button id="selectall"><img src="https://www.svgrepo.com/show/435415/select.svg" aria-hidden="true" /><span>Select</button>
+      <button id="copy"><img src="https://www.svgrepo.com/show/488885/copy-1.svg" aria-hidden="true" /><span>Copy</span></button>
+      <button id="backspace"><img src="https://www.svgrepo.com/show/342967/backspace.svg" aria-hidden="true" /><span>Backspace</span></button>
+      <button id="delete"><img src="https://www.svgrepo.com/show/368049/delete.svg" aria-hidden="true" /><span>Delete</span></button>
+      <button id="help"><img src="https://www.svgrepo.com/show/438616/help-round.svg" aria-hidden="true" /><span>Help</span></button>
+    </div>
     <div id="keyboard">
       <div id="set_1" class="column">
         <button class="key" id="a">あ</button>
@@ -466,18 +476,10 @@
         <button class="key">ォ</button>
       </div>
     </div>
-    <div id="options">
-      <button id="kana"><img src="https://www.svgrepo.com/show/489164/swap.svg" aria-hidden="true" /><span id="update">カタカナ</span></button>
-      <button id="selectall"><img src="https://www.svgrepo.com/show/435415/select.svg" aria-hidden="true" /><span>Select</button>
-      <button id="copy"><img src="https://www.svgrepo.com/show/488885/copy-1.svg" aria-hidden="true" /><span>Copy</span></button>
-      <button id="backspace"><img src="https://www.svgrepo.com/show/342967/backspace.svg" aria-hidden="true" /><span>Backspace</span></button>
-      <button id="delete"><img src="https://www.svgrepo.com/show/368049/delete.svg" aria-hidden="true" /><span>Delete</span></button>
-      <button id="help"><img src="https://www.svgrepo.com/show/438616/help-round.svg" aria-hidden="true" /><span>Help</span></button>
-    </div>
   </div>
   <div id="help_information" class="hidden">
     <h1>Kana Keyboard Help Page</h1>
-    <span id="ver">Kana Keyboard Ver. 3.6 | Mode: <em>Standard</em></span>
+    <span id="ver">Kana Keyboard Ver. 3.65 | Mode: <em>Standard</em></span>
     <p style="margin-top: 1.5rem;">Thank you for using the Kana Keyboard. This page contains information pertaining to available features and updates for the keyboard. For additional assistance please contact your instructor.</p>
     <div class="information_container">
       <details>
@@ -489,6 +491,7 @@
             <li><span class="example_key">CTRL</span> + <span class="example_key">Backspace</span> - Deletes the last character that was entered in the container. Hold down the buttons to rapidly delete characters.</li>
             <li><span class="example_key">CTRL</span> + <span class="example_key">Delete</span> - Deletes your entire word/sentence.</li>
             <li><span class="example_key">CTRL</span> + <span class="example_key">A</span> - Automatically highlights/selects your word/sentence. Use this in conjunction with <span class="example_key">CTRL</span> + <span class="example_key">C</span> to quickly highlight and copy your word. <strong><em>**RECOMMENDED</em></strong></li>
+            <li><span class="example_key">CTRL</span> + <span class="example_key">V</span> - Paste your copied content.</li>
           </ul>
         </div>
       </details>
@@ -501,6 +504,7 @@
             <li><span class="example_key">⌘</span> + <span class="example_key">Backspace</span> - Deletes the last character that was entered in the container. Hold down the buttons to rapidly delete characters.</li>
             <li><span class="example_key">⌘</span> + <span class="example_key">Delete</span> - Deletes your entire word/sentence.</li>
             <li><span class="example_key">⌘</span> + <span class="example_key">A</span> - Automatically highlights/selects your word/sentence. Use this in conjunction with <span class="example_key">⌘</span> + <span class="example_key">C</span> to quickly highlight and copy your word. <strong><em>**RECOMMENDED</em></strong></li>
+            <li><span class="example_key">⌘</span> + <span class="example_key">V</span> - Paste your copied content.</li>
           </ul>
         </div>
       </details>
@@ -556,7 +560,7 @@
         <div class="information">
           <p>Tracking updates and changes implemented after version 3.5.</p><br>
           <p><strong>March 26, 20226 | Version 3.6</strong></p><br>
-          <ul id="patch_notes">
+          <ul class="patch_notes">
             <li>Updated style sheet for better accessibility with dark mode.</li>
             <li>Added <strong>Select</strong> button
               <ul>
@@ -564,6 +568,12 @@
                 <li style="list-style-type: circle">Added to improve functionality for mobile users when using keyboard in Canvas App.</li>
               </ul>
             </li>
+          </ul>
+          <p><strong>March 30, 20226 | Version 3.65</strong></p><br>
+          <ul class="patch_notes">
+            <li>Updated keyboard shortcut information.</li>
+            <li>Relocated function buttons above keyboard.</li>
+            <li>Changed functionality of copy command. <em>Comments added for reference.</em></li>
           </ul>
         </div>
       </details>
@@ -622,9 +632,13 @@
       document.getElementById("DISPLAY_AREA").textContent = "";
     });
     copy.addEventListener("click", (e) => {
-      navigator.clipboard.writeText(
+      window
+        .getSelection()
+        .selectAllChildren(document.querySelector("#DISPLAY_AREA"));
+      const copied = document.execCommand('copy');
+      /* navigator.clipboard.writeText(
         document.getElementById("DISPLAY_AREA").textContent
-      );
+      ); */
     });
     help.addEventListener("click", (e) => {
       document.querySelector("#app").classList.add("hidden");
@@ -1010,7 +1024,7 @@
           document.getElementById("DISPLAY_AREA").textContent += "チ";
         }
         document.getElementById("typing").value = "";
-      } else if (text == "tsu") {
+      } else if (text == "tsu" || text == "tu") {
         if (kana_toggle === "hiragana") {
           document.getElementById("DISPLAY_AREA").textContent += "つ";
         } else {
@@ -1644,7 +1658,7 @@
           document.getElementById("DISPLAY_AREA").textContent += "ン";
         }
         document.getElementById("typing").value = "";
-      } else if (text == "xtsu") {
+      } else if (text == "xtsu" || text == "xtu") {
         if (kana_toggle === "hiragana") {
           document.getElementById("DISPLAY_AREA").textContent += "っ";
         } else {
@@ -1768,7 +1782,7 @@
           document.getElementById("DISPLAY_AREA").textContent += "ッチ";
         }
         document.getElementById("typing").value = "";
-      } else if (text == "ttsu") {
+      } else if (text == "ttsu" || text == "ttu") {
         if (kana_toggle === "hiragana") {
           document.getElementById("DISPLAY_AREA").textContent += "っつ";
         } else {
