@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mississippi State Online 40th Anniversary Bingo Card Generator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --main-color: #5d1725;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+html {
+  font-family: "Poppins", sans-serif;
+  background: #5d1725;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  max-width: 900px;
+}
+
+#bingo_card,
+#clone_card {
+  background: url("https://hostapps.online.msstate.edu/projects/forty_anniversary/img/bg.png"),
+    linear-gradient(to bottom, #5d1725, #370d16);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1.75rem;
+}
+
+#clone_card {
+  padding: 0;
+}
+
+h1 {
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  font-size: 60pt;
+}
+
+#clone_card h1 {
+  font-size: 60pt !important;
+}
+
+#container {
+  border: 3px solid #000;
+  width: fit-content;
+}
+
+#clone_card #container {
+  border: 3px solid #000 !important;
+}
+
+#bingo_spots,
+h1 {
+  display: grid;
+  grid-template-columns: repeat(5, 130px);
+  place-content: center;
+  margin: auto;
+}
+
+#clone_card #bingo_spots, #clone_card h1 {
+  grid-template-columns: repeat(5, 130px) !important;
+}
+
+.spot {
+  background: #fff;
+  aspect-ratio: 1 / 1;
+}
+
+.bingo,
+.bingo img {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  font-size: 50pt;
+  font-weight: 700;
+  cursor: pointer;
+  border: 3px solid #000;
+}
+
+#clone_card .bingo {
+  border: 3px solid #000 !important;
+  font-size: 50pt !important;
+}
+
+.bingo img {
+  background: transparent;
+  border: none;
+  display: block;
+}
+
+.free {
+  padding: 0.5rem;
+}
+
+#clone_card .free {
+  padding: 0.5rem !important;
+}
+
+.checked {
+  background: var(--main-color) !important;
+  color: #fff !important;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#colors {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.25rem;
+  padding-bottom: 0.5rem;
+}
+
+#monochrome {
+  margin-top: 2.5rem;
+}
+
+#colors button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+  transition: 0.4s ease;
+  border: 6px outset #c0c0c0;
+}
+
+#colors img {
+  max-width: 60px;
+  display: block;
+}
+
+#colors button:hover,
+#colors img:hover {
+  filter: drop-shadow(2px 2px #00000080) brightness(90%);
+}
+
+.active img {
+  filter: invert(1);
+}
+
+.active button {
+  border: 6px outset #fff !important;
+}
+
+.active img:hover {
+  filter: invert(1) !important;
+}
+
+dialog {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  border: 2px solid #14141440;
+  border-radius: 6px;
+  text-align: center;
+  padding: 1rem;
+}
+
+dialog h1 {
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+  font-size: 18pt;
+  background: linear-gradient(to left, #1e1d1d, #484849, #1e1d1d);
+  color: #fff;
+  padding: 0.2rem 0.7rem;
+  border-radius: 4px;
+  text-align: left;
+  display: block;
+}
+
+dialog::backdrop {
+  background-color: #00000090;
+  backdrop-filter: blur(5px);
+}
+
+@media only screen and (max-width: 900px) {
+  #bingo_spots,
+  h1 {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    place-content: center;
+    margin: auto;
+  }
+
+  .bingo {
+    font-size: 45pt;
+    border: 3px solid #000;
+  }
+
+  #colors {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .free {
+    padding: 0.25rem;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  #bingo_spots,
+  h1 {
+    display: grid;
+    grid-template-columns: repeat(5, 80px);
+    place-content: center;
+    margin: auto;
+  }
+
+  .spot {
+    background: #fff;
+    aspect-ratio: 1 / 1;
+  }
+
+  .bingo {
+    font-size: 36pt;
+    border: 2px solid #000;
+  }
+
+  #colors {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  h1 {
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    font-size: 50pt;
+  }
+
+  #container {
+    border: 2px solid #000;
+    width: fit-content;
+  }
+
+  .free {
+    padding: 0.2rem;
+  }
+}
+
+@media only screen and (max-width: 445px) {
+  #bingo_spots,
+  h1 {
+    display: grid;
+    grid-template-columns: repeat(5, 60px);
+    place-content: center;
+    margin: auto;
+  }
+
+  .spot {
+    background: #fff;
+    aspect-ratio: 1 / 1;
+  }
+
+  .bingo {
+    font-size: 25pt;
+    border: 2px solid #000;
+  }
+
+  #colors {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  h1 {
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    font-size: 35pt;
+  }
+
+  #container {
+    border: 2px solid #000;
+    width: fit-content;
+  }
+
+  .free {
+    padding: 0.15rem;
+  }
+
+  #colors {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-bottom: 0.5rem;
+  }
+
+  #colors button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+    transition: 0.4s ease;
+    border: 4px outset #c0c0c0;
+  }
+
+  #colors img {
+    max-width: 40px;
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  #bingo_spots,
+  h1 {
+    display: grid;
+    grid-template-columns: repeat(5, 45px);
+    place-content: center;
+    margin: auto;
+  }
+
+  .spot {
+    background: #fff;
+    aspect-ratio: 1 / 1;
+  }
+
+  .bingo {
+    font-size: 18pt;
+    border: 2px solid #000;
+  }
+
+  #colors {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  h1 {
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    font-size: 25pt;
+    width: 100%;
+  }
+
+  #container {
+    border: 2px solid #000;
+    width: fit-content;
+  }
+
+  .free {
+    padding: 0.1rem;
+  }
+
+  #colors {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+
+  #colors button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+    transition: 0.4s ease;
+    border: 4px outset #c0c0c0;
+  }
+
+  #colors img {
+    max-width: 40px;
+    display: block;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <section id="bingo_card">
+    <h1><span>B</span><span>I</span><span>N</span><span>G</span><span>O</span></h1>
+    <div id="container">
+      <div id="bingo_spots">
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+        <div class="spot"></div>
+      </div>
+    </div>
+    <div id="colors">
+      <div class="switch"></div>
+      <div class="switch"></div>
+      <div class="switch"></div>
+      <div class="switch"></div>
+      <div class="switch"></div>
+      <div class="switch"></div>
+      <div class="switch"></div>
+    </div>
+  </section>
+  <dialog>
+    <span class="fa fa-spinner fa-pulse fa-3x fa-fw"></span>
+    <h1>Processing Request, Please Wait...</h1>
+  </dialog>
+  <script>const spots=document.querySelectorAll(".spot"),switches=document.querySelectorAll(".switch"),colors=["#A9431E","#00A3AD","#642F6C","#8F993E","#C99700"];let b=[0,5,10,15,20],ii=[1,6,11,16,21],n=[2,7,12,17,22],g=[3,8,13,18,23],o=[4,9,14,19,24];const root=document.querySelector(":root");let toggle="false";function generate_num(){let e=[],t="";for(let s=0;s<25;s++)if(b.includes(s)?t=Math.floor(15*Math.random()+1):ii.includes(s)?t=Math.floor(15*Math.random()+11):n.includes(s)?t=Math.floor(15*Math.random()+21):g.includes(s)?t=Math.floor(15*Math.random()+31):o.includes(s)&&(t=Math.floor(15*Math.random()+41)),12===s){const e=document.createElement("button");e.classList.add("bingo"),e.classList.add("flex");const t=document.createElement("img");t.src="https://hostapps.online.msstate.edu/projects/forty_anniversary/img/FREE.png",t.classList.add("free"),e.addEventListener("click",(e=>{click_number(s)})),e.appendChild(t),spots[s].appendChild(e)}else if(-1==e.indexOf(t)){e.push(t);const o=document.createElement("button");o.textContent=t,o.classList.add("bingo"),o.addEventListener("click",(e=>{click_number(s)})),spots[s].appendChild(o)}else s--}function click_number(e){spots[e].children[0].classList.contains("checked")?spots[e].children[0].classList.remove("checked"):spots[e].children[0].classList.add("checked")}function generate_color(){for(let e=0;e<switches.length;e++){const t=document.createElement("button"),o=document.createElement("img");5===e?(o.src="https://hostapps.online.msstate.edu/projects/forty_anniversary/img/refresh.svg",t.addEventListener("click",(e=>{refresh()}))):6===e?(o.src="https://hostapps.online.msstate.edu/projects/forty_anniversary/img/download.svg",t.addEventListener("click",(e=>{pdf_download()}))):(o.src="https://hostapps.online.msstate.edu/projects/forty_anniversary/img/add.svg",t.style.setProperty("background",`${colors[e]}`),t.addEventListener("click",(t=>{change_color(e)}))),t.appendChild(o),switches[e].appendChild(t)}}function change_color(e){switches[e].classList.contains("active")?(root.style.setProperty("--main-color","#5d1725"),switches[e].classList.remove("active"),switches[e].children[0].children[0].src="https://hostapps.online.msstate.edu/projects/forty_anniversary/img/add.svg"):(root.style.setProperty("--main-color",`${colors[e]}`),document.querySelector(".active")&&(document.querySelector(".active").children[0].children[0].src="https://hostapps.online.msstate.edu/projects/forty_anniversary/img/add.svg",document.querySelector(".active").classList.remove("active")),switches[e].classList.add("active"),switches[e].children[0].children[0].src="https://hostapps.online.msstate.edu/projects/forty_anniversary/img/close.svg")}function refresh(){let e=[],t="";for(let s=0;s<25;s++)b.includes(s)?t=Math.floor(15*Math.random()+1):ii.includes(s)?t=Math.floor(15*Math.random()+11):n.includes(s)?t=Math.floor(15*Math.random()+21):g.includes(s)?t=Math.floor(15*Math.random()+31):o.includes(s)&&(t=Math.floor(15*Math.random()+41)),12!=s&&(-1==e.indexOf(t)?(e.push(t),spots[s].children[0].textContent=t):s--)}function pdf_download(){let e=document.querySelector("#bingo_card").cloneNode(!0);e.id="clone_card",e.children[2].id="monochrome",e.children[2].textContent="",html2pdf().from(e).set({margin:0,filename:"msstate_online_40th_bingo_card",img:{type:"png"},html2canvas:{scale:2,useCORS:!0},jsPDF:{unit:"in",format:[800,816],orientation:"portrait",hotfixes:"px_scaling",unit:"px"}}).save(),dialog()}function dialog(){document.querySelector("dialog").showModal(),setTimeout((e=>{document.querySelector("dialog").close()}),2e3)}generate_num(),generate_color();</script>
+</body>
+
+</html>
