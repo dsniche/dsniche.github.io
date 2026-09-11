@@ -778,10 +778,14 @@
     help.addEventListener("click", (e) => {
       document.querySelector("#app").classList.add("hidden");
       document.querySelector("#help_information").classList.remove("hidden");
+      document.querySelector("body").style.setProperty("overflow","auto");
+      document.querySelector("html").style.setProperty("overflow","auto");
     });
     goback.addEventListener("click", (e) => {
       document.querySelector("#app").classList.remove("hidden");
       document.querySelector("#help_information").classList.add("hidden");
+      document.querySelector("body").removeAttribute("style");
+      document.querySelector("html").removeAttribute("style");
     });
     selectall.addEventListener("click", (e) => {
       window
