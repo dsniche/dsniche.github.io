@@ -109,14 +109,14 @@
 
     .information,
     #bug_report .information {
-      background-color: #E1E4EB;
+      background-color: #e1e4eb;
       padding: 0.7rem;
       border-radius: 0 0 5px 5px;
       font-size: 12pt;
     }
 
     #bug_report .information {
-      background-color: #F0E5DF;
+      background-color: #f0e5df;
     }
 
     .information p {
@@ -162,7 +162,7 @@
       font-family: "Noto Sans JP", sans-serif;
       padding: 0 0.5rem;
       border: 1px solid #12286390;
-      background-color: #CED2DF;
+      background-color: #ced2df;
       font-size: 16pt;
       max-width: 526px;
       width: 100%;
@@ -358,6 +358,60 @@
       #options {
         flex-wrap: wrap;
         justify-content: center;
+      }
+
+      #keyboard {
+        gap: 0.25rem !important;
+      }
+
+      .column {
+        gap: 0.25rem !important;
+      }
+
+      #set_11 {
+        padding-right: 0.8rem;
+      }
+
+      .key,
+      .empty,
+      .empty_n {
+        width: 20px !important;
+        height: 20px !important;
+        font-size: 11pt !important;
+      }
+
+      .key {
+        display: grid;
+        place-content: center;
+      }
+
+      #kana span,
+      #copy span,
+      #delete span,
+      #kana span,
+      #backspace span,
+      #help span,
+      #return span,
+      #selectall span {
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+
+      #DISPLAY_AREA {
+        font-size: 14pt !important;
+        min-height: 30px !important;
+      }
+
+      #app {
+        gap: 0.55rem !important;
+      }
+
+      #typing {
+        font-size: 12pt !important;
       }
     }
   </style>
