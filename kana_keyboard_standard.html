@@ -218,7 +218,7 @@
     #options {
       display: flex;
       gap: 0.4rem;
-      width: 98%;
+      width: 100%;
       justify-content: space-between;
       box-sizing: border-box;
     }
@@ -230,12 +230,14 @@
     #backspace,
     #help,
     #return,
-    #selectall {
+    #selectall,
+    #cut {
       display: flex;
       align-items: center;
       padding: 0.2rem 0.4rem;
       gap: 0.2rem;
       font-family: "Noto Sans JP", sans-serif;
+      font-size: 9.2pt;
     }
 
     #copy img {
@@ -267,6 +269,10 @@
 
     #selectall img {
       max-width: 16px;
+    }
+
+    #cut img {
+      max-width: 15px;
     }
 
     #kana,
@@ -394,7 +400,8 @@
       #backspace,
       #help,
       #return,
-      #selectall {
+      #selectall,
+      #cut {
         padding: 0.2rem 0.3rem;
         display: grid;
         place-content: center;
@@ -420,7 +427,8 @@
       #backspace span,
       #help span,
       #return span,
-      #selectall span {
+      #selectall span,
+      #cut span {
         position: absolute;
         left: -10000px;
         top: auto;
@@ -474,6 +482,7 @@
     <div class="mobile_switch">
       <div id="options">
         <button id="kana"><img src="https://www.svgrepo.com/show/489164/swap.svg" aria-hidden="true" /><span id="update">カタカナ</span></button>
+        <button id="cut"><img src="https://www.svgrepo.com/show/348678/edit-cut.svg" aria-hidden="true" /><span>Cut</button>
         <button id="selectall"><img src="https://www.svgrepo.com/show/435415/select.svg" aria-hidden="true" /><span>Select</button>
         <button id="copy"><img src="https://www.svgrepo.com/show/488885/copy-1.svg" aria-hidden="true" /><span>Copy</span></button>
         <button id="backspace"><img src="https://www.svgrepo.com/show/342967/backspace.svg" aria-hidden="true" /><span>Backspace</span></button>
@@ -708,6 +717,7 @@
     const kana = document.querySelector("#kana");
     const selectall = document.querySelector("#selectall");
     const copy = document.querySelector("#copy");
+    const cut = document.querySelector("#cut");
     const backspace = document.querySelector("#backspace");
     const remove = document.querySelector("#delete");
     const help = document.querySelector("#help");
@@ -746,6 +756,16 @@
         .getSelection()
         .selectAllChildren(document.querySelector("#DISPLAY_AREA"));
       const copied = document.execCommand('copy');
+      /* navigator.clipboard.writeText(
+        document.getElementById("DISPLAY_AREA").textContent
+      ); */
+    });
+    cut.addEventListener("click", (e) => {
+      window
+        .getSelection()
+        .selectAllChildren(document.querySelector("#DISPLAY_AREA"));
+      const copied = document.execCommand('copy');
+      document.getElementById("DISPLAY_AREA").textContent = "";
       /* navigator.clipboard.writeText(
         document.getElementById("DISPLAY_AREA").textContent
       ); */
