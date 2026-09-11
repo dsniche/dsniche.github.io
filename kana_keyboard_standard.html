@@ -2502,6 +2502,19 @@
         window
           .getSelection()
           .selectAllChildren(document.querySelector("#DISPLAY_AREA"));
+      } else if (
+        (event.ctrlKey && event.key === "x") ||
+        (event.ctrlKey && event.key === "X") ||
+        (event.metaKey && event.key === "x") ||
+        (event.metaKey && event.key === "X")
+      ) {
+        event.preventDefault();
+        document.activeElement.blur();
+        window
+          .getSelection()
+          .selectAllChildren(document.querySelector("#DISPLAY_AREA"));
+        const copied = document.execCommand('copy');
+        document.getElementById("DISPLAY_AREA").textContent = "";
       }
     });
     document.querySelector("#typing").addEventListener("keydown", (e) => {
