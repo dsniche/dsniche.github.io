@@ -8,6 +8,18 @@
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+JP:wght@100..900&display=swap");
 
+    * {
+      scrollbar-width: thin;
+    }
+
+    *::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+    }
+
     body {
       margin: 0;
       max-width: 560px;
@@ -168,6 +180,8 @@
       width: 100%;
       border-radius: 3px;
       min-height: 35px;
+      white-space: nowrap;
+      overflow-x: auto;
       font-weight: bold;
     }
 
@@ -348,12 +362,14 @@
       }
     }
 
-    @media screen and (max-width: 550px) {    
-      html, body {
+    @media screen and (max-width: 550px) {
+
+      html,
+      body {
         height: 392px;
         overflow: hidden;
       }
-      
+
       #app {
         padding: 0.3125rem 0.6rem;
       }
@@ -778,8 +794,8 @@
     help.addEventListener("click", (e) => {
       document.querySelector("#app").classList.add("hidden");
       document.querySelector("#help_information").classList.remove("hidden");
-      document.querySelector("body").style.setProperty("overflow","auto");
-      document.querySelector("html").style.setProperty("overflow","auto");
+      document.querySelector("body").style.setProperty("overflow", "auto");
+      document.querySelector("html").style.setProperty("overflow", "auto");
     });
     goback.addEventListener("click", (e) => {
       document.querySelector("#app").classList.remove("hidden");
