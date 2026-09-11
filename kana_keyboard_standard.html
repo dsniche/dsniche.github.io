@@ -171,7 +171,8 @@
       font-weight: bold;
     }
 
-    #keyboard {
+    #keyboard,
+    section {
       display: flex;
       flex-direction: row-reverse;
       gap: 0.2rem;
@@ -347,6 +348,7 @@
       }
 
       #keyboard {
+        display: unset;
         flex-wrap: wrap;
         justify-content: center;
       }
@@ -360,25 +362,42 @@
         justify-content: center;
       }
 
-      #keyboard {
+      #keyboard,
+      .column {
         gap: 0.25rem !important;
       }
 
-      .column {
-        gap: 0.25rem !important;
+      #section_2 {
+        margin-top: 0.25rem;
       }
 
       .key,
       .empty,
       .empty_n {
-        width: 20px !important;
-        height: 20px !important;
-        font-size: 11pt !important;
+        width: 29px !important;
+        height: 29px !important;
+        font-size: 12.5pt !important;
       }
 
       .key {
         display: grid;
         place-content: center;
+      }
+
+      #kana,
+      #copy,
+      #delete,
+      #kana,
+      #backspace,
+      #help,
+      #return,
+      #selectall {
+        padding: 0.1rem 0.3rem;
+      }
+
+      #backspace,
+      #delete {
+        padding: 0.1rem;
       }
 
       #kana span,
@@ -398,8 +417,8 @@
       }
 
       #DISPLAY_AREA {
-        font-size: 14pt !important;
-        min-height: 30px !important;
+        font-size: 12pt !important;
+        min-height: 26px !important;
       }
 
       #app {
@@ -407,7 +426,18 @@
       }
 
       #typing {
-        font-size: 12pt !important;
+        font-size: 10pt !important;
+        height: 18px !important;
+      }
+
+      #copyright {
+        display: none;
+      }
+
+      #filler,
+      #set_13 {
+        margin-top: -10.3rem;
+        margin-right: 5px;
       }
     }
   </style>
@@ -426,105 +456,109 @@
       <button id="help"><img src="https://www.svgrepo.com/show/438616/help-round.svg" aria-hidden="true" /><span>Help</span></button>
     </div>
     <div id="keyboard">
-      <div id="set_1" class="column">
-        <button class="key" id="a">あ</button>
-        <button class="key" id="i">い</button>
-        <button class="key" id="u">う</button>
-        <button class="key" id="e">え</button>
-        <button class="key" id="o">お</button>
-      </div>
-      <div id="set_2" class="column">
-        <button class="key" id="ka">か</button>
-        <button class="key" id="ki">き</button>
-        <button class="key" id="ku">く</button>
-        <button class="key" id="ke">け</button>
-        <button class="key" id="ko">こ</button>
-      </div>
-      <div id="set_3" class="column">
-        <button class="key" id="sa">さ</button>
-        <button class="key" id="shi">し</button>
-        <button class="key" id="su">す</button>
-        <button class="key" id="se">せ</button>
-        <button class="key" id="so">そ</button>
-      </div>
-      <div id="set_4" class="column">
-        <button class="key" id="ta">た</button>
-        <button class="key" id="chi">ち</button>
-        <button class="key" id="tsu">つ</button>
-        <button class="key" id="te">て</button>
-        <button class="key" id="to">と</button>
-      </div>
-      <div id="set_5" class="column">
-        <button class="key" id="na">な</button>
-        <button class="key" id="ni">に</button>
-        <button class="key" id="nu">ぬ</button>
-        <button class="key" id="ne">ね</button>
-        <button class="key" id="no">の</button>
-      </div>
-      <div id="set_6" class="column">
-        <button class="key" id="ha">は</button>
-        <button class="key" id="hi">ひ</button>
-        <button class="key" id="fu">ふ</button>
-        <button class="key" id="he">へ</button>
-        <button class="key" id="ho">ほ</button>
-      </div>
-      <div id="set_7" class="column">
-        <button class="key" id="ma">ま</button>
-        <button class="key" id="mi">み</button>
-        <button class="key" id="mu">む</button>
-        <button class="key" id="me">め</button>
-        <button class="key" id="mo">も</button>
-      </div>
-      <div id="set_8" class="column">
-        <button class="key" id="ya">や</button>
-        <div class="empty">&nbsp;</div>
-        <button class="key" id="yu">ゆ</button>
-        <div class="empty">&nbsp;</div>
-        <button class="key" id="yo">よ</button>
-      </div>
-      <div id="set_9" class="column">
-        <button class="key" id="ra">ら</button>
-        <button class="key" id="ri">り</button>
-        <button class="key" id="ru">る</button>
-        <button class="key" id="re">れ</button>
-        <button class="key" id="ro">ろ</button>
-      </div>
-      <div id="set_10" class="column">
-        <button class="key" id="wa">わ</button>
-        <div class="empty">&nbsp;</div>
-        <div class="empty">&nbsp;</div>
-        <div class="empty">&nbsp;</div>
-        <button class="key" id="wo">を</button>
-      </div>
-      <div id="set_11" class="column">
-        <button class="key" id="sokuon">っ</button>
-        <button class="key" id="dakuten">゛</button>
-        <button class="key" id="handakuten">゜</button>
-        <div id="long_vowel_filler" class="empty">&nbsp;</div>
-        <button class="key hidden" id="long_vowel">ー</button>
-        <button class="key" id="n">ん</button>
-      </div>
-      <div id="set_12" class="column">
-        <button class="key" id="xya">ゃ</button>
-        <div class="empty">&nbsp;</div>
-        <button class="key" id="xyu">ゅ</button>
-        <div class="empty">&nbsp;</div>
-        <button class="key" id="xyo">ょ</button>
-      </div>
-      <div id="filler" class="column">
-        <div class="empty">&nbsp;</div>
-        <div class="empty">&nbsp;</div>
-        <div class="empty">&nbsp;</div>
-        <div class="empty">&nbsp;</div>
-        <div class="empty">&nbsp;</div>
-      </div>
-      <div id="set_13" class="column hidden">
-        <button class="key">ァ</button>
-        <button class="key">ィ</button>
-        <button class="key">ュ</button>
-        <button class="key">ェ</button>
-        <button class="key">ォ</button>
-      </div>
+      <section>
+        <div id="set_1" class="column">
+          <button class="key" id="a">あ</button>
+          <button class="key" id="i">い</button>
+          <button class="key" id="u">う</button>
+          <button class="key" id="e">え</button>
+          <button class="key" id="o">お</button>
+        </div>
+        <div id="set_2" class="column">
+          <button class="key" id="ka">か</button>
+          <button class="key" id="ki">き</button>
+          <button class="key" id="ku">く</button>
+          <button class="key" id="ke">け</button>
+          <button class="key" id="ko">こ</button>
+        </div>
+        <div id="set_3" class="column">
+          <button class="key" id="sa">さ</button>
+          <button class="key" id="shi">し</button>
+          <button class="key" id="su">す</button>
+          <button class="key" id="se">せ</button>
+          <button class="key" id="so">そ</button>
+        </div>
+        <div id="set_4" class="column">
+          <button class="key" id="ta">た</button>
+          <button class="key" id="chi">ち</button>
+          <button class="key" id="tsu">つ</button>
+          <button class="key" id="te">て</button>
+          <button class="key" id="to">と</button>
+        </div>
+        <div id="set_5" class="column">
+          <button class="key" id="na">な</button>
+          <button class="key" id="ni">に</button>
+          <button class="key" id="nu">ぬ</button>
+          <button class="key" id="ne">ね</button>
+          <button class="key" id="no">の</button>
+        </div>
+        <div id="set_6" class="column">
+          <button class="key" id="ha">は</button>
+          <button class="key" id="hi">ひ</button>
+          <button class="key" id="fu">ふ</button>
+          <button class="key" id="he">へ</button>
+          <button class="key" id="ho">ほ</button>
+        </div>
+      </section>
+      <section id="section_2">
+        <div id="set_7" class="column">
+          <button class="key" id="ma">ま</button>
+          <button class="key" id="mi">み</button>
+          <button class="key" id="mu">む</button>
+          <button class="key" id="me">め</button>
+          <button class="key" id="mo">も</button>
+        </div>
+        <div id="set_8" class="column">
+          <button class="key" id="ya">や</button>
+          <div class="empty">&nbsp;</div>
+          <button class="key" id="yu">ゆ</button>
+          <div class="empty">&nbsp;</div>
+          <button class="key" id="yo">よ</button>
+        </div>
+        <div id="set_9" class="column">
+          <button class="key" id="ra">ら</button>
+          <button class="key" id="ri">り</button>
+          <button class="key" id="ru">る</button>
+          <button class="key" id="re">れ</button>
+          <button class="key" id="ro">ろ</button>
+        </div>
+        <div id="set_10" class="column">
+          <button class="key" id="wa">わ</button>
+          <div class="empty">&nbsp;</div>
+          <div class="empty">&nbsp;</div>
+          <div class="empty">&nbsp;</div>
+          <button class="key" id="wo">を</button>
+        </div>
+        <div id="set_11" class="column">
+          <button class="key" id="sokuon">っ</button>
+          <button class="key" id="dakuten">゛</button>
+          <button class="key" id="handakuten">゜</button>
+          <div id="long_vowel_filler" class="empty">&nbsp;</div>
+          <button class="key hidden" id="long_vowel">ー</button>
+          <button class="key" id="n">ん</button>
+        </div>
+        <div id="set_12" class="column">
+          <button class="key" id="xya">ゃ</button>
+          <div class="empty">&nbsp;</div>
+          <button class="key" id="xyu">ゅ</button>
+          <div class="empty">&nbsp;</div>
+          <button class="key" id="xyo">ょ</button>
+        </div>
+        <div id="filler" class="column">
+          <div class="empty">&nbsp;</div>
+          <div class="empty">&nbsp;</div>
+          <div class="empty">&nbsp;</div>
+          <div class="empty">&nbsp;</div>
+          <div class="empty">&nbsp;</div>
+        </div>
+        <div id="set_13" class="column hidden">
+          <button class="key">ァ</button>
+          <button class="key">ィ</button>
+          <button class="key">ュ</button>
+          <button class="key">ェ</button>
+          <button class="key">ォ</button>
+        </div>
+      </section>
     </div>
   </div>
   <div id="help_information" class="hidden">
