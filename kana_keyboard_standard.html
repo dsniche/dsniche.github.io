@@ -438,7 +438,7 @@
       }
 
       #help {
-        padding: 0.4rem
+        padding: 0.4rem;
       }
 
       #kana span,
@@ -491,6 +491,49 @@
 
       .mobile_switch {
         display: flex;
+      }
+    }
+
+    @media screen and (max-width: 239px) {
+      textarea {
+        display: none;
+      }
+
+      .mobile_switch {
+        display: unset;
+      }
+
+      #options {
+        flex-direction: row;
+        margin-right: 0;
+        gap: 0.25rem;
+        margin-bottom: 0.5rem;
+        flex-wrap: nowrap;
+      }
+
+      #help {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 199px) {
+
+      #set_13,
+      #filler {
+        display: none !important;
+      }
+
+      #keyboard {
+        display: grid;
+        place-content: center;
+      }
+
+      #options button {
+        padding: 0.2rem;
+      }
+
+      #options button img {
+        max-width: 15px;
       }
     }
   </style>
@@ -710,7 +753,7 @@
                 <li style="list-style-type: circle">Function buttons relocated to left of keyboard and text descriptions removed.</li>
                 <li style="list-style-type: circle">Other elements re-sized to confine into a set height for Canvas embedding</li>
               </ul>
-            </li>           
+            </li>
             <li>Display block updated to not wrap text and add horizontal scroll.</li>
           </ul>
           <p><strong>March 30, 2026 | Version 3.65</strong></p><br>
